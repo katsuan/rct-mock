@@ -180,6 +180,42 @@
   .note { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 13px; line-height: 1.75; color: var(--sub); }
   .note b { color: var(--text); display: block; font-size: 14px; margin-bottom: 2px; }
 
+  /* ===== 3つの柱 ===== */
+  .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 0 0 8px; }
+  .pillar { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 13px; line-height: 1.75; color: var(--sub); }
+  .pillar b { color: var(--text); font-size: 16px; }
+  .pillar span { display: inline-block; margin-left: 8px; font-size: 11px; font-weight: 700; color: #fff; background: var(--brand-d); border-radius: 999px; padding: 1px 8px; vertical-align: 2px; }
+  .pillar p { margin: 6px 0 0; }
+  /* ===== 引き継ぎ ===== */
+  .handoff { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 12px; }
+  .handoff > div { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 13px; line-height: 1.8; color: var(--sub); }
+  .handoff b { display: block; color: var(--text); font-size: 14px; margin-bottom: 4px; }
+  .handoff code { font-family: var(--mono); background: #eef3fc; border-radius: 4px; padding: 0 5px; color: var(--brand-d); }
+  .handoff .pill { display: inline-block; background: #fff5f5; color: #c0392b; border-radius: 999px; padding: 0 8px; margin: 0 4px 2px 0; font-size: 12px; }
+  /* ===== スワイプする復習カード ===== */
+  .p-swipe { position: relative; margin: 14px 16px 0; }
+  .p-card { position: relative; background: #222a3a; border-radius: 16px; padding: 16px; min-height: 250px; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; transition: transform .25s, opacity .25s; outline: none; }
+  .p-card:focus-visible { box-shadow: 0 0 0 2px var(--brand); }
+  .p-card .p-code { font-size: 12px; max-height: 150px; overflow: auto; }
+  .p-card .stamp { position: absolute; top: 14px; font-weight: 900; font-size: 15px; border: 3px solid; border-radius: 10px; padding: 2px 10px; opacity: 0; transition: opacity .1s; }
+  .p-card .stamp.left { right: 14px; color: #ff9b9b; transform: rotate(12deg); }
+  .p-card .stamp.right { left: 14px; color: var(--ok); transform: rotate(-12deg); }
+  .p-card[data-dir="left"] .stamp.left, .p-card[data-dir="right"] .stamp.right { opacity: 1; }
+  .p-swipe-help { text-align: center; font-size: 11px; color: #7f8aa6; margin: 8px 0 0; }
+  button.p-rate-b { border: 0; font: inherit; font-size: 13px; font-weight: 700; border-radius: 12px; padding: 10px 4px; cursor: pointer; }
+  .p-done { text-align: center; padding: 50px 10px; color: #dbe3f2; font-size: 14px; line-height: 1.9; }
+  /* ===== SQL の組み立て ===== */
+  .sql-rows { margin: 8px 12px; background: #11151e; border-radius: 12px; padding: 10px; font-family: var(--mono); font-size: 13px; display: grid; gap: 6px; }
+  .sql-row { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 8px; align-items: center; }
+  .sql-row .kw { color: var(--t-kw); font-weight: 700; white-space: nowrap; }
+  .slot { min-height: 32px; border: 1.5px dashed #3a4560; border-radius: 8px; padding: 4px 8px; cursor: pointer; background: transparent; color: var(--ed-text); font: inherit; text-align: left; }
+  .slot.filled { border-style: solid; border-color: var(--brand); }
+  .slot.bad { border-color: var(--ng); background: rgba(255,93,93,.12); }
+  .slot.good { border-color: var(--ok); background: rgba(61,220,151,.1); }
+  .tiles { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 12px; }
+  .tile { font-family: var(--mono); font-size: 13px; background: #222a3a; border: 1px solid #2f3a50; color: #e6edf7; border-radius: 10px; padding: 8px 10px; cursor: pointer; }
+  .tile.used { visibility: hidden; }
+
   /* ===== スマホ ===== */
   .phones { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; align-items: start; }
   .phone-wrap h3 { font-size: 15px; margin: 0 0 4px; }
@@ -250,7 +286,7 @@
     <div class="what"><b>見てほしいところ</b>（5分くらい）
       <ol><li>下の黒い枠で、2問ほど打ってみる（英数入力で）。<code>print(</code> などの所で Tab を押すと、スニペットが入る</li>
       <li>右の「色テーマ」「お手本の見せ方」と、下の効果音を切りかえてみる</li>
-      <li>スマホの「穴うめ」をタップで遊んでみる</li></ol></div>
+      <li>「思い出す」の穴うめ・復習カード（左右にスワイプ）・SQL の組み立てを遊んでみる</li></ol></div>
     <a class="fb-btn" href="https://github.com/katsuan/rct-mock/issues/new?template=feedback.yml" target="_blank" rel="noopener">✏️ 感想を送る</a>
     <details class="changes"><summary>10/23 にもらった感想を受けて直したこと</summary>
       <ul>
@@ -262,11 +298,17 @@
         <li>打つ音・まちがえた音・クリアの音（オン／オフ付き）。BGM はモックでは省略（本番では入れる）</li>
         <li>ゲームのすぐ下に、草の小さい版を置いた</li>
         <li>スマホの「穴うめ」をタップで遊べるように</li>
+        <li>「思い出す」を PC・スマホ共通にし、スワイプで答える復習カード・SQL の組み立て・PC との引き継ぎを足した</li>
         <li>実務のコピペに近い使い方として、スニペット（5つまで保存・Tab で呼び出し）を足した</li>
       </ul>
     </details>
   </div>
   <!-- ================= PC ================= -->
+  <div class="pillars">
+    <div class="pillar"><b>⌨️ 打つ</b><span>PC 専用</span><p>色つきのお手本をタイピング。手に覚えさせて、まちがいを集める。</p></div>
+    <div class="pillar"><b>🧠 思い出す</b><span>PC でもスマホでも</span><p>穴うめ・並べかえ・復習カード・SQL の組み立て。打たずに、選ぶ・並べる・答える。</p></div>
+    <div class="pillar"><b>🔄 引き継ぎ</b><span>同じ記録を使う</span><p>PC でまちがえた言葉はスマホの問題に、スマホで「忘れた」問題は PC の次の問題に。</p></div>
+  </div>
   <h2 class="sec">🖥 PC：色つきのコードを打つ</h2>
   <p>エディタと同じ見た目で、お手本はうすく見えていて、打った所から本当の色が付きます。まちがえた字は赤くなり、正しく打つまで先に進めません。</p>
 
@@ -398,8 +440,8 @@
   </div>
 
   <!-- ================= スマホ ================= -->
-  <h2 class="sec">📱 スマホ：打たずに「思い出す」</h2>
-  <p>スマホでコードを長く打つのはつらいので、同じ問題（学習帳）を、指で選ぶ・並べる・当てる遊びにします。1回30秒くらい、電車の中でも。①の穴うめは実際にタップで遊べます（②〜④は見た目だけ）。</p>
+  <h2 class="sec">🧠 思い出す：PC でもスマホでも</h2>
+  <p>同じ問題（学習帳）を、打たずに選ぶ・並べる・答える遊びにします。スマホなら1回30秒くらい、電車の中でも。PC ではクリックとキー（← →）で同じように遊べます。①穴うめ・④復習カード・⑤SQL の組み立ては実際に遊べます（②③は見た目だけ）。</p>
 
   <div class="phones">
     <div class="phone-wrap">
@@ -449,23 +491,32 @@
     </div>
 
     <div class="phone-wrap">
-      <h3>④ きょうの復習カード</h3>
-      <p>忘れかけた問題を毎日少しだけ出す（間隔をあけて復習）。「覚えてた？」を3つで答えると、次に出す日が決まる。</p>
+      <h3>④ きょうの復習カード <span class="tag">スワイプで遊べます</span></h3>
+      <p>忘れかけた問題を毎日少しだけ出す。カードをタップで答えを見て、左にスワイプで「忘れた」、右で「覚えてた」。「忘れた」問題は PC の次の問題に先に出る。</p>
       <div class="phone">
-        <div class="p-top"><span class="logo">Rct</span><span>きょう あと 4枚</span></div>
-        <div class="p-card-stack">
-          <div class="p-mini">SQL ・ 前回 6日前</div>
-          <div style="font-size:14px;margin-bottom:10px">20才より上の人の名前を出す</div>
-<div class="p-code" style="margin:0"><span class="t-kw">SELECT</span> name <span class="t-kw">FROM</span> users
-<span class="t-kw">WHERE</span> age <span class="t-op">&gt;</span> <span class="t-num">20</span><span class="t-op">;</span></div>
-          <div class="p-mini" style="margin-top:10px">↑ タップで答えを見る</div>
+        <div class="p-top"><span class="logo">Rct</span><span id="cTop"></span></div>
+        <div class="p-swipe" id="cArea"></div>
+        <div class="p-swipe-help">← 忘れた　・　覚えてた →　（PC は ← → ↑ キー、スペースで答え）</div>
+        <div class="p-rate" id="cRate">
+          <button class="p-rate-b" data-r="forgot" style="background:rgba(255,93,93,.18);color:#ff9b9b">😣 忘れた</button>
+          <button class="p-rate-b" data-r="maybe" style="background:rgba(255,210,87,.16);color:var(--cur)">🤔 あやしい</button>
+          <button class="p-rate-b" data-r="ok" style="background:rgba(61,220,151,.16);color:var(--ok)">😎 覚えてた</button>
         </div>
-        <div class="p-rate">
-          <div style="background:rgba(255,93,93,.18);color:#ff9b9b">😣 忘れた</div>
-          <div style="background:rgba(255,210,87,.16);color:var(--cur)">🤔 あやしい</div>
-          <div style="background:rgba(61,220,151,.16);color:var(--ok)">😎 覚えてた</div>
-        </div>
-        <div class="p-foot"><div class="p-btn">🖥 PC で打つリストへ</div></div>
+        <div class="p-out" id="cOut"></div>
+      </div>
+    </div>
+
+    <div class="phone-wrap">
+      <h3>⑤ SQL を組み立てる <span class="tag">タップで遊べます</span></h3>
+      <p>SELECT・FROM・WHERE の枠は最初から出ていて、残りの言葉を正しい枠に入れる。慣れたら GROUP BY などの枠が増える。</p>
+      <div class="phone">
+        <div class="p-top"><span class="logo">Rct</span><span id="sqTop"></span></div>
+        <div class="p-bar"><i id="sqBar"></i></div>
+        <div class="p-q" id="sqQ"></div>
+        <div class="sql-rows" id="sqRows"></div>
+        <div class="tiles" id="sqTiles"></div>
+        <div class="p-out" id="sqOut"></div>
+        <div class="p-foot"><button class="p-btn" id="sqClear">やり直す</button><button class="p-btn primary" id="sqCheck">これで合ってる？</button></div>
       </div>
     </div>
   </div>
@@ -475,7 +526,11 @@
     <div class="arrow">→</div>
     <div><b>📱 スマホで思い出す</b><span>まちがえた所・忘れかけた所を、すき間時間に</span></div>
     <div class="arrow">→</div>
-    <div><b>🖥 また PC で打つ</b><span>あやしい問題が先に出る（苦手から）</span></div>
+    <div><b>🖥 また PC で打つ</b><span>「忘れた」「あやしい」問題が先に出る</span></div>
+  </div>
+  <div class="handoff">
+    <div><b>🖥 → 📱 PC からスマホへ</b><span id="hoToPhone"></span></div>
+    <div><b>📱 → 🖥 スマホから PC へ</b><span id="hoToPc"></span></div>
   </div>
 
   <div class="fb-end">
@@ -635,15 +690,20 @@ function tokensOf(code) { return [...new Set(code.match(/[A-Za-z_]\w*|=>|>=|<=|\
 let cur = { miss: {} }; /* 打っている途中の問題のまちがい */
 function weakStats() {
   const list = Repo.list(Auth.current().id).slice(-can("weak.window"));
-  const tok = {}, last = {};
+  const tok = {}, last = {}, fg = {};
   const add = (t) => (tok[t] = tok[t] || { seen: 0, miss: 0 });
   for (const a of list) {
+    if (a.mode === "card") { /* スマホの復習カード：「覚えてた」で消え、PC で打っても消える */
+      if (a.result === "ok") delete fg[a.problemId]; else fg[a.problemId] = { t: a.startedAt, r: a.result };
+      continue;
+    }
+    if (fg[a.problemId] && a.startedAt > fg[a.problemId].t) delete fg[a.problemId];
     a.seen.forEach((t) => add(t).seen++);
     for (const [t, n] of Object.entries(a.miss)) add(t).miss += n;
     last[a.problemId] = Math.max(last[a.problemId] || 0, a.startedAt);
   }
   for (const [t, n] of Object.entries(cur.miss)) add(t).miss += n;
-  return { tok, last };
+  return { tok, last, fg };
 }
 /* まちがえやすさ 0〜1。正しく打つほど下がる（数が少ないうちは控えめ） */
 function weakness(S, t) { const s = S.tok[t]; return s ? (s.miss + 0.1) / (s.seen + s.miss + 1) : 0; }
@@ -657,10 +717,12 @@ function pickNext(curP) {
     const weakScore = hits.reduce((s, t) => s + weakness(S, t), 0);
     const last = S.last[i];
     const fresh = last ? Math.min((now - last) / 864e5, 7) / 7 * 0.4 : 0.6; /* 忘れかけ・まだ打っていない */
-    const score = weakScore * 3 + fresh + Math.random() * 0.15;              /* 少しだけばらつかせる */
-    if (!best || score > best.score) best = { i, score, hits, last };
+    const f = S.fg[i], fgScore = f ? (f.r === "forgot" ? 2 : 1) : 0;            /* スマホで「忘れた」「あやしい」 */
+    const score = weakScore * 3 + fresh + fgScore + Math.random() * 0.15;     /* 少しだけばらつかせる */
+    if (!best || score > best.score) best = { i, score, hits, last, f };
   });
-  const why = best.hits.length
+  const why = best.f ? `スマホで「${best.f.r === "forgot" ? "忘れた" : "あやしい"}」にした問題だから`
+    : best.hits.length
     ? `練習中の ${best.hits.slice(0, 3).map((t) => `<code>${esc(t)}</code>`).join(" ")} が入っているから`
     : best.last ? "しばらく打っていないから" : "まだ打っていない問題だから";
   return { i: best.i, why };
@@ -668,7 +730,7 @@ function pickNext(curP) {
 function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 const WEAK_AFTER = 2; /* 何問か打つまでは出さない */
 function drawWeak() {
-  const S = weakStats(), top = topWeak(S, 6), done = Repo.list(Auth.current().id).length;
+  const S = weakStats(), top = topWeak(S, 6), done = Repo.list(Auth.current().id).filter((a) => a.mode !== "card").length;
   if (done < WEAK_AFTER) { $("weakList").innerHTML = `<div class="weak-empty">あと ${WEAK_AFTER - done} 問打つと、まちがえやすい言葉がここに出ます。打ちまちがいも入るので、気にしすぎなくて大丈夫です。</div>`; return; }
   $("weakList").innerHTML = top.length
     ? top.map((t) => `<div class="weak-row"><span>${esc(t)}</span><span class="m"><i style="width:${Math.round(weakness(S, t) * 100)}%"></i></span><span>${S.tok[t].miss}</span></div>`).join("")
@@ -740,12 +802,22 @@ function drawGrass() {
 }
 function drawFoot() {
   const list = Repo.list(Auth.current().id), k = dayKey(Date.now());
-  const today = list.filter((a) => dayKey(a.startedAt) === k);
+  const today = list.filter((a) => dayKey(a.startedAt) === k && a.mode !== "card");
   const best = list.filter((a) => a.problemId === P).reduce((m, a) => Math.max(m, a.wpm), 0);
   $("footToday").textContent = `🌱 きょう ${today.length}問・${today.reduce((s, a) => s + a.chars, 0)}文字`;
   $("footBest").textContent = `🏆 この問題の自己ベスト ${best ? best + " WPM" : "―"}`;
 }
-function refresh() { drawWeak(); drawGrass(); drawFoot(); drawSnips(); }
+function label(i) { const p = PROBLEMS[i]; return `${p.lang} ${PROBLEMS.slice(0, i).filter((q) => q.lang === p.lang).length + 1}`; }
+function drawHandoff() {
+  const S = weakStats(), top = topWeak(S, 4), fgs = Object.entries(S.fg);
+  $("hoToPhone").innerHTML = top.length
+    ? `練習中の言葉 ${top.map((t) => `<code>${esc(t)}</code>`).join(" ")} を、スマホの穴うめの空欄と「どこがおかしい？」に出す`
+    : "まだありません。PC で打って、まちがえた言葉がここに入ります";
+  $("hoToPc").innerHTML = fgs.length
+    ? fgs.map(([i, f]) => `<span class="pill">${f.r === "forgot" ? "😣" : "🤔"} ${label(+i)}</span>`).join("") + "<br>→ PC の「練習中の言葉で次へ」で先に出る"
+    : "まだありません。復習カードを左にスワイプ（忘れた）すると、ここに入ります";
+}
+function refresh() { drawWeak(); drawGrass(); drawFoot(); drawSnips(); drawHandoff(); }
 
 function buildChips() {
   $("langChips").innerHTML = PROBLEMS.map((p, i) => `<button class="chip" data-i="${i}" aria-pressed="false">${p.lang} ${PROBLEMS.slice(0, i).filter((q) => q.lang === p.lang).length + 1}</button>`).join("");
@@ -939,7 +1011,111 @@ $("fChoices").addEventListener("click", (e) => {
 $("fHint").addEventListener("click", () => ($("fOut").textContent = "💡 " + FILL[F.i].hint));
 $("fNext").addEventListener("click", () => { F.i = (F.i + 1) % FILL.length; if (F.i === 0) F.streak = 0; fillLoad(); });
 
-buildChips(); load(0); refresh(); fillLoad();
+/* ===== 思い出す：きょうの復習カード（スワイプ） ===== */
+const CARDS = [
+  { p: 2, q: "部署ごとの人数を出す。3人より多い部署だけ" },
+  { p: 0, q: "リストの数を全部2倍にして返す関数" },
+  { p: 1, q: "値段の合計を出し、400 を超えたら表示する" },
+  { p: 5, q: "注文が1件もない人を出す" },
+];
+const NEXT_DAY = { forgot: "すぐ（PC の次の問題にも）", maybe: "あした", ok: "4日後" };
+const C = { i: 0, open: false };
+function cardHTML() {
+  if (C.i >= CARDS.length) return `<div class="p-card p-done" id="cCard">🎉 きょうの分はおわり！<br><button class="p-btn primary" id="cAgain" style="margin-top:14px;padding:10px 18px">もう一度</button></div>`;
+  const c = CARDS[C.i], pr = PROBLEMS[c.p];
+  return `<div class="p-card" id="cCard" tabindex="0" aria-label="復習カード。左右の矢印キーで答える">
+    <div class="stamp left">忘れた</div><div class="stamp right">覚えてた</div>
+    <div class="p-mini">${esc(label(c.p))}</div>
+    <div style="font-size:14px;margin-bottom:10px;color:#dbe3f2">${esc(c.q)}</div>
+    <div class="p-code" style="margin:0" ${C.open ? "" : "hidden"}>${hl(pr.code, pr.lang)}</div>
+    <div class="p-mini" style="margin-top:10px">${C.open ? "← 忘れた ・ 覚えてた →" : "👆 タップで答えを見る"}</div></div>`;
+}
+function cardDraw() {
+  $("cArea").innerHTML = cardHTML();
+  $("cTop").textContent = C.i < CARDS.length ? `きょう あと ${CARDS.length - C.i}枚` : "きょう 0枚";
+  $("cRate").style.visibility = C.i < CARDS.length ? "" : "hidden";
+  const card = $("cCard"), again = $("cAgain");
+  if (again) { again.onclick = () => { C.i = 0; C.open = false; $("cOut").textContent = ""; cardDraw(); }; return; }
+  let d = null;
+  card.addEventListener("pointerdown", (e) => { d = { x: e.clientX, y: e.clientY, moved: false }; card.setPointerCapture(e.pointerId); card.style.transition = "none"; });
+  card.addEventListener("pointermove", (e) => {
+    if (!d) return; const dx = e.clientX - d.x, dy = e.clientY - d.y;
+    if (Math.abs(dx) > 6) d.moved = true;
+    card.style.transform = `translate(${dx}px, ${dy * 0.15}px) rotate(${dx / 16}deg)`;
+    card.dataset.dir = dx > 50 ? "right" : dx < -50 ? "left" : "";
+  });
+  const end = (e) => {
+    if (!d) return; const dx = e.clientX - d.x, moved = d.moved; d = null; card.style.transition = "";
+    if (dx > 90) cardAnswer("ok"); else if (dx < -90) cardAnswer("forgot");
+    else { card.style.transform = ""; card.dataset.dir = ""; if (!moved) { C.open = !C.open; cardDraw(); $("cCard").focus(); } }
+  };
+  card.addEventListener("pointerup", end); card.addEventListener("pointercancel", end);
+  card.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") { e.preventDefault(); cardAnswer("forgot"); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); cardAnswer("ok"); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); cardAnswer("maybe"); }
+    else if (e.key === " " || e.key === "Enter") { e.preventDefault(); C.open = !C.open; cardDraw(); $("cCard").focus(); }
+  });
+}
+function cardAnswer(r) {
+  if (C.i >= CARDS.length) return;
+  const c = CARDS[C.i], card = $("cCard");
+  Repo.add({ id: Date.now().toString(36), userId: Auth.current().id, problemId: c.p, lang: PROBLEMS[c.p].lang, startedAt: Date.now(),
+    ms: 0, chars: 0, wpm: 0, acc: 0, miss: {}, seen: [], device: "phone", mode: "card", result: r });
+  (r === "ok" ? Sound.ok : r === "forgot" ? Sound.miss : Sound.type).call(Sound);
+  $("cOut").textContent = `${r === "ok" ? "😎 覚えてた" : r === "forgot" ? "😣 忘れた" : "🤔 あやしい"} → 次は${NEXT_DAY[r]}`;
+  const x = r === "ok" ? 420 : r === "forgot" ? -420 : 0, y = r === "maybe" ? -320 : 0;
+  card.style.transform = `translate(${x}px, ${y}px) rotate(${x / 20}deg)`; card.style.opacity = "0";
+  refresh();
+  setTimeout(() => { C.i++; C.open = false; cardDraw(); const n = $("cCard"); if (n && n.tabIndex === 0) n.focus({ preventScroll: true }); }, 230);
+}
+$("cRate").addEventListener("click", (e) => { const b = e.target.closest("[data-r]"); if (b) cardAnswer(b.dataset.r); });
+
+/* ===== 思い出す：SQL の組み立て ===== */
+const SQLQ = [
+  { q: "20才より上の人の名前を出す", rows: [["SELECT", "name"], ["FROM", "users"], ["WHERE", "age > 20"]], extra: ["orders", "age < 20"] },
+  { q: "部署ごとの人数を出す（3人より多い部署だけ）", rows: [["SELECT", "dept, COUNT(*)"], ["FROM", "users"], ["GROUP BY", "dept"], ["HAVING", "COUNT(*) > 3"]], extra: ["WHERE", "name"] },
+];
+const SQ = { i: 0, slots: [], tiles: [], done: false };
+function sqLoad() {
+  const q = SQLQ[SQ.i]; SQ.done = false;
+  SQ.slots = q.rows.map(() => null);
+  SQ.tiles = [...q.rows.map((r) => r[1]), ...q.extra].map((t) => ({ t, used: false })).sort(() => Math.random() - 0.5);
+  $("sqQ").textContent = q.q; $("sqOut").textContent = ""; $("sqCheck").textContent = "これで合ってる？";
+  sqDraw();
+}
+function sqDraw(marks) {
+  const q = SQLQ[SQ.i];
+  $("sqTop").textContent = `${SQ.i + 1} / ${SQLQ.length}`; $("sqBar").style.width = ((SQ.i + (SQ.done ? 1 : 0)) / SQLQ.length) * 100 + "%";
+  $("sqRows").innerHTML = q.rows.map((r, i) => {
+    const v = SQ.slots[i], m = marks ? (marks[i] ? " good" : " bad") : "";
+    return `<div class="sql-row"><span class="kw">${r[0]}</span><button class="slot${v !== null ? " filled" : ""}${m}" data-s="${i}">${v !== null ? hl(SQ.tiles[v].t, "SQL") : "　"}</button></div>`;
+  }).join("");
+  $("sqTiles").innerHTML = SQ.tiles.map((x, i) => `<button class="tile${x.used ? " used" : ""}" data-t="${i}">${esc(x.t)}</button>`).join("");
+}
+$("sqTiles").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-t]"); if (!b || SQ.done) return;
+  const k = SQ.slots.indexOf(null); if (k < 0) return;
+  SQ.slots[k] = +b.dataset.t; SQ.tiles[+b.dataset.t].used = true; Sound.type(); sqDraw();
+});
+$("sqRows").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-s]"); if (!b || SQ.done) return;
+  const v = SQ.slots[+b.dataset.s]; if (v === null) return;
+  SQ.tiles[v].used = false; SQ.slots[+b.dataset.s] = null; sqDraw();
+});
+$("sqClear").addEventListener("click", () => { if (!SQ.done) sqLoad(); });
+$("sqCheck").addEventListener("click", () => {
+  if (SQ.done) { SQ.i = (SQ.i + 1) % SQLQ.length; sqLoad(); return; }
+  if (SQ.slots.includes(null)) { $("sqOut").textContent = "空いている枠があります"; return; }
+  const q = SQLQ[SQ.i], marks = q.rows.map((r, i) => SQ.tiles[SQ.slots[i]].t === r[1]);
+  if (marks.every(Boolean)) {
+    SQ.done = true; Sound.ok(); $("sqOut").textContent = "✅ 正解！";
+    $("sqCheck").textContent = SQ.i === SQLQ.length - 1 ? "もう一度" : "次へ（枠が増える）";
+  } else { Sound.miss(); $("sqOut").textContent = "赤い枠がちがいます。タップで外せます"; }
+  sqDraw(marks);
+});
+
+buildChips(); load(0); refresh(); fillLoad(); cardDraw(); sqLoad();
 </script>
 </body>
 </html>
