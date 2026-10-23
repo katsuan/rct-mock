@@ -10,10 +10,10 @@
   :root {
     --brand: #87aae6; --brand-d: #4f7fd6; --shadow: #8f8f8f;
     --bg: #eef2f9; --card: #fff; --text: #1d2433; --sub: #5d6880; --line: #d9e1ef;
-    --ed-bg: #171c27; --ed-gutter: #4a5470; --ed-ghost: .32;
+    --ed-bg: #1e1e1e; --ed-gutter: #858585; --ed-ghost: .32;
     --ok: #3ddc97; --ng: #ff5d5d; --cur: #ffd257;
-    /* ハイライトの色 */
-    --t-kw: #c792ea; --t-fn: #82aaff; --t-str: #c3e88d; --t-num: #f78c6c; --t-com: #6b7a99; --t-bi: #ffcb6b; --t-op: #89ddff; --t-pl: #e6edf7;
+    /* ハイライトの色（VS Code の標準ダークテーマ Dark+ と同じ） */
+    --t-kw: #569cd6; --t-ctl: #c586c0; --t-fn: #dcdcaa; --t-str: #ce9178; --t-num: #b5cea8; --t-com: #6a9955; --t-bi: #dcdcaa; --t-op: #d4d4d4; --t-pl: #9cdcfe; --ed-text: #d4d4d4;
     --mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
   }
   * { box-sizing: border-box; }
@@ -27,7 +27,7 @@
   h2.sec + p { color: var(--sub); margin: 0 0 14px; font-size: 14px; line-height: 1.8; }
 
   /* ===== PC ゲーム画面 ===== */
-  .game { background: var(--ed-bg); border-radius: 18px; color: var(--t-pl); overflow: hidden; box-shadow: 0 20px 50px rgba(20,30,60,.25); }
+  .game { background: var(--ed-bg); border-radius: 18px; color: var(--ed-text); overflow: hidden; box-shadow: 0 20px 50px rgba(20,30,60,.25); }
   .g-top { display: flex; align-items: center; gap: 18px; padding: 14px 20px; border-bottom: 1px solid #262d3d; flex-wrap: wrap; }
   .g-top .logo { font-size: 24px; text-shadow: 1.5px 1.5px 0 #3b4458; }
   .chips { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -46,7 +46,7 @@
   .editor:focus { box-shadow: inset 0 0 0 2px rgba(135,170,230,.35); }
   .ln { display: flex; white-space: pre; }
   .ln .no { width: 52px; text-align: right; padding-right: 16px; color: var(--ed-gutter); user-select: none; flex: none; }
-  .ln.active .no { color: #aab6cf; }
+  .ln.active .no { color: #c6c6c6; }
   .ln.active { background: rgba(255,255,255,.03); }
   .c { opacity: var(--ed-ghost); transition: opacity .08s; }
   .c.done { opacity: 1; }
@@ -56,12 +56,15 @@
   .c.nl.done { opacity: .25; }
   .c.auto.done { opacity: .5; }
   .hidden-ghost .c:not(.done):not(.cur) { opacity: 0; }
+  .ghost-word .c:not(.done):not(.cur):not(.near) { opacity: 0; }
+  .opt-label { font-size: 12px; color: #9aa3b5; margin: 0 0 6px; }
+  .opt-note { font-size: 12px; color: #7f8aa6; margin: 6px 0 0; line-height: 1.6; }
   @keyframes blink { 50% { box-shadow: inset 2px 0 0 transparent; } }
   @keyframes shake { 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
   .t-kw { color: var(--t-kw); } .t-fn { color: var(--t-fn); } .t-str { color: var(--t-str); } .t-num { color: var(--t-num); }
-  .t-com { color: var(--t-com); font-style: italic; } .t-bi { color: var(--t-bi); } .t-op { color: var(--t-op); } .t-pl { color: var(--t-pl); }
+  .t-ctl { color: var(--t-ctl); } .t-com { color: var(--t-com); } .t-bi { color: var(--t-bi); } .t-op { color: var(--t-op); } .t-pl { color: var(--t-pl); }
 
-  .start-cover { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(23,28,39,.55); backdrop-filter: blur(1px); font-family: "Noto Sans JP", sans-serif; }
+  .start-cover { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(30,30,30,.6); backdrop-filter: blur(1px); font-family: "Noto Sans JP", sans-serif; }
   .start-cover div { text-align: center; }
   .start-cover b { font-size: 18px; display: block; margin-bottom: 6px; }
   .start-cover span { color: #aab6cf; font-size: 13px; }
@@ -73,7 +76,7 @@
   .rules li { margin: 0 0 4px; line-height: 1.6; }
   .rules { padding-left: 18px; margin: 0; }
   .toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-  .g-foot { display: flex; gap: 16px; padding: 10px 20px; border-top: 1px solid #262d3d; font-size: 12px; color: #7f8aa6; flex-wrap: wrap; }
+  .g-foot { display: flex; align-items: center; gap: 16px; padding: 10px 20px; border-top: 1px solid #262d3d; font-size: 12px; color: #7f8aa6; flex-wrap: wrap; }
 
   .toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px); opacity: 0; background: #1d2433; color: #fff; padding: 10px 18px; border-radius: 12px; font-size: 14px; transition: .2s; pointer-events: none; z-index: 10; }
   .toast.show { opacity: 1; transform: translateX(-50%); }
@@ -94,7 +97,7 @@
   .weak-list { display: flex; flex-direction: column; gap: 5px; }
   .weak-row { display: grid; grid-template-columns: 1fr 70px 26px; gap: 8px; align-items: center; font-family: var(--mono); font-size: 13px; color: #dbe3f2; }
   .weak-row .m { height: 6px; background: #262d3d; border-radius: 3px; overflow: hidden; }
-  .weak-row .m i { display: block; height: 100%; background: var(--ng); }
+  .weak-row .m i { display: block; height: 100%; background: var(--brand); }
   .weak-row span:last-child { text-align: right; color: #7f8aa6; }
   .weak-empty { font-size: 12px; color: #7f8aa6; line-height: 1.6; }
   .adapt { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
@@ -116,6 +119,12 @@
   .grass i, .legend i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
   .l0 { background: #ebeff6; } .l1 { background: #c9daf6; } .l2 { background: #94b5ec; } .l3 { background: #5b8be0; } .l4 { background: #2f5db3; }
   .grass i.today { outline: 2px solid var(--cur); outline-offset: 1px; }
+  .mini-rec { display: flex; align-items: center; gap: 14px 18px; flex-wrap: wrap; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 16px; margin-top: 12px; font-size: 13px; color: var(--sub); }
+  .mini-rec b { color: var(--brand-d); font-family: var(--mono); font-size: 16px; }
+  .mini-grass { display: grid; grid-template-rows: repeat(7, 9px); grid-auto-flow: column; grid-auto-columns: 9px; gap: 2px; }
+  .mini-grass i { width: 9px; height: 9px; border-radius: 2px; }
+  .mini-grass i.today { outline: 1.5px solid var(--cur); outline-offset: 1px; }
+  .mini-rec a { margin-left: auto; color: var(--brand-d); font-weight: 700; text-decoration: none; }
   .grass i.locked { background: repeating-linear-gradient(45deg, #f1f3f8, #f1f3f8 3px, #e6eaf2 3px, #e6eaf2 6px); }
   .grass-foot { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--sub); margin-top: 8px; flex-wrap: wrap; gap: 8px; }
   .legend { display: inline-flex; align-items: center; gap: 3px; }
@@ -146,7 +155,7 @@
   .phones { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; align-items: start; }
   .phone-wrap h3 { font-size: 15px; margin: 0 0 4px; }
   .phone-wrap > p { font-size: 13px; color: var(--sub); margin: 0 0 10px; line-height: 1.7; min-height: 44px; }
-  .phone { width: 100%; max-width: 320px; height: 600px; border: 8px solid #1d2433; border-radius: 30px; background: var(--ed-bg); color: var(--t-pl); overflow: hidden; display: flex; flex-direction: column; }
+  .phone { width: 100%; max-width: 320px; height: 600px; border: 8px solid #1d2433; border-radius: 30px; background: var(--ed-bg); color: var(--ed-text); overflow: hidden; display: flex; flex-direction: column; }
   .p-top { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px 8px; font-size: 12px; color: #aab6cf; }
   .p-top .logo { font-size: 18px; text-shadow: 1px 1px 0 #3b4458; }
   .p-bar { height: 4px; margin: 0 16px; background: #262d3d; border-radius: 2px; overflow: hidden; }
@@ -158,6 +167,11 @@
   .p-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 6px 12px; }
   .p-choice { font-family: var(--mono); font-size: 14px; background: #222a3a; border: 1px solid #2f3a50; color: #e6edf7; border-radius: 12px; padding: 12px 6px; text-align: center; }
   .p-choice.right { border-color: var(--ok); background: rgba(61,220,151,.12); }
+  button.p-choice { font: inherit; font-family: var(--mono); font-size: 14px; cursor: pointer; }
+  .p-choice.wrong { border-color: var(--ng); background: rgba(255,93,93,.12); animation: shake .18s; }
+  button.p-btn { border: 0; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; }
+  button.p-btn:disabled { opacity: .4; cursor: default; }
+  .phone-wrap h3 .tag { font-size: 11px; font-weight: 700; color: #fff; background: var(--brand-d); border-radius: 999px; padding: 2px 8px; margin-left: 4px; vertical-align: 2px; }
   .p-foot { margin-top: auto; padding: 12px; display: flex; gap: 8px; }
   .p-btn { flex: 1; text-align: center; border-radius: 14px; padding: 13px; font-weight: 700; font-size: 14px; background: #222a3a; color: #dbe3f2; }
   .p-btn.primary { background: var(--brand-d); color: #fff; }
@@ -191,6 +205,9 @@
   .intro ol { margin: 4px 0 0; padding-left: 1.4em; }
   .fb-btn { display: inline-block; background: var(--brand-d); color: #fff; text-decoration: none; font-weight: 700; padding: 10px 18px; border-radius: 999px; white-space: nowrap; }
   .fb-btn:hover { filter: brightness(1.08); }
+  .changes { flex: 1 1 100%; font-size: 13px; color: var(--sub); }
+  .changes summary { cursor: pointer; font-weight: 700; color: var(--brand-d); }
+  .changes ul { margin: 6px 0 0; padding-left: 1.4em; line-height: 1.8; }
   .fb-end { text-align: center; margin: 48px 0 0; }
   .fb-end p { color: var(--sub); font-size: 14px; margin: 0 0 12px; }
 </style>
@@ -202,10 +219,21 @@
 
   <div class="intro">
     <div class="what"><b>見てほしいところ</b>（5分くらい）
-      <ol><li>下の黒い枠で、1〜2問打ってみる（英数入力で）</li>
-      <li>「苦手に合わせて次へ」と、草のマスの変化を見る</li>
-      <li>スマホの4つの遊び方を見る</li></ol></div>
+      <ol><li>下の黒い枠で、2問ほど打ってみる（英数入力で）</li>
+      <li>右の「お手本の見せ方」（全部・言葉だけ・見せない）と、下の効果音を切りかえてみる</li>
+      <li>スマホの「穴うめ」をタップで遊んでみる</li></ol></div>
     <a class="fb-btn" href="https://github.com/katsuan/rct-mock/issues/new?template=feedback.yml" target="_blank" rel="noopener">✏️ 感想を送る</a>
+    <details class="changes"><summary>10/23 にもらった感想を受けて直したこと</summary>
+      <ul>
+        <li>ハイライトの色を VS Code の標準テーマ（Dark+）に合わせた</li>
+        <li>お手本の見せ方を3段階に（全部 → 打っている言葉だけ → 見せない）</li>
+        <li>「苦手」をやめて「練習中の言葉」に。2問打つまでは出さない</li>
+        <li>練習中の言葉に合わせた出題を、オン／オフできるように</li>
+        <li>打つ音・まちがえた音・クリアの音（オン／オフ付き）。BGM は準備中</li>
+        <li>ゲームのすぐ下に、草の小さい版を置いた</li>
+        <li>スマホの「穴うめ」をタップで遊べるように</li>
+      </ul>
+    </details>
   </div>
   <!-- ================= PC ================= -->
   <h2 class="sec">🖥 PC：色つきのコードを打つ</h2>
@@ -243,17 +271,23 @@
             <div class="r-next" id="rNext"></div>
             <div class="r-actions">
               <button class="btn primary" id="again">🔁 もう一度 <span class="kbd" style="color:#fff;background:transparent;border-color:rgba(255,255,255,.5)">Enter</span></button>
-              <button class="btn" id="next">苦手に合わせて次へ →</button>
+              <button class="btn" id="next">練習中の言葉で次へ →</button>
             </div>
           </div>
         </div>
       </div>
       <aside class="side">
         <div><h3>💡 この問題のメモ</h3><div class="hint" id="memo"></div></div>
-        <div><h3>😣 あなたの苦手（打つほど育つ）</h3><div class="weak-list" id="weakList"></div></div>
+        <div><h3>🌱 練習中の言葉（正しく打つと減る）</h3><div class="weak-list" id="weakList"></div></div>
         <div><h3>⚙️ 練習のしかた</h3>
-          <label class="toggle"><input type="checkbox" id="ghostToggle" checked> お手本を見せる</label>
-          <div style="font-size:12px;color:#7f8aa6;margin:4px 0 0 24px">外すと「思い出して打つ」モード（打った所だけ出る）</div>
+          <div class="opt-label">お手本の見せ方</div>
+          <div class="chips" id="ghostChips">
+            <button class="chip" data-g="all" aria-pressed="true">全部</button>
+            <button class="chip" data-g="word" aria-pressed="false">言葉だけ</button>
+            <button class="chip" data-g="none" aria-pressed="false">見せない</button>
+          </div>
+          <div class="opt-note" id="ghostNote"></div>
+          <label class="toggle" style="margin-top:12px"><input type="checkbox" id="adaptToggle" checked> 練習中の言葉に合わせて次を出す</label>
         </div>
         <div><h3>📏 ルール</h3>
           <ul class="rules">
@@ -265,31 +299,37 @@
         </div>
       </aside>
     </div>
-    <div class="g-foot"><span>🎵 BGM オフ</span><span id="footBest">🏆 自己ベスト ―</span><span id="footToday">🌱 きょう 0問</span></div>
+    <div class="g-foot"><button class="chip" id="seToggle" aria-pressed="true">🔊 効果音 オン</button><span title="曲を決めてから入れます">🎵 BGM（準備中）</span><span id="footBest">🏆 自己ベスト ―</span><span id="footToday">🌱 きょう 0問</span></div>
+  </div>
+  <div class="mini-rec">
+    <span>🌱 <b id="mStreak">0</b> 日つづけて ・ きょう <b id="mToday">0</b> 文字</span>
+    <div class="mini-grass" id="miniGrass" aria-label="直近12週の記録"></div>
+    <a href="#records">くわしい記録 ↓</a>
   </div>
 
   <div class="notes">
-    <div class="note"><b>① 色がつくのが気持ちいい</b>うすいお手本に、打った所から色がのる。エディタで書いているのと同じ見た目なので、そのまま仕事のコードの形が手に残ります。</div>
+    <div class="note"><b>① 色がつくのが気持ちいい</b>うすいお手本に、打った所から色がのる。色は VS Code の標準テーマ（Dark+）と同じなので、仕事で見るコードの形のまま手に残ります。</div>
     <div class="note"><b>② コピペできない・ずるができない</b>貼り付け・ドロップを止める。ふつうの入力欄を使わず1字ずつ判定するので、補完もきかない。ランキングの公平さにもつながります。</div>
-    <div class="note"><b>③ ゲームらしさ</b>コンボ・WPM・自己ベスト・ランク（今の初段〜4級をそのまま）。まちがえた所は結果に出して「苦手」に入れ、あとでスマホで復習。</div>
-    <div class="note"><b>④ 思い出して打つ</b>「お手本を見せる」を外すと、前の行までしか見えない。Remind（思い出す）の名前どおりの上級モード。</div>
+    <div class="note"><b>③ ゲームらしさ</b>コンボ・WPM・自己ベスト・ランク（今の初段〜4級をそのまま）。まちがえた所は結果に出して「練習中の言葉」に入れ、あとでスマホで復習。</div>
+    <div class="note"><b>④ 思い出して打つ</b>お手本の見せ方は「全部」→「言葉だけ」→「見せない」の3段階。いきなり全部隠さず、少しずつ見ないで打てるようにする。Remind（思い出す）の名前どおり。</div>
+    <div class="note"><b>⑤ 音でも気持ちよく</b>打つ音・まちがえた音・クリアの音が鳴る（下の「🔊 効果音」で切りかえ）。BGM は曲を決めてから入れる。</div>
   </div>
 
   <!-- ================= 苦手に合わせた出題 ================= -->
-  <h2 class="sec">🎯 苦手に合わせて出す</h2>
-  <p>まちがえた「字」ではなく「言葉」（<code>range</code>・<code>=&gt;</code>・<code>HAVING</code> など）ごとに苦手を数えます。上の画面でも、何問か打つと右に苦手がたまり、「苦手に合わせて次へ」がそれを多くふくむ問題を選びます（選んだ理由も出す）。</p>
+  <h2 class="sec">🎯 まちがえやすい言葉に合わせて出す</h2>
+  <p>まちがえた「字」ではなく「言葉」（<code>range</code>・<code>=&gt;</code>・<code>HAVING</code> など）ごとに、まちがえやすさを数えます（AI ではなく、出てきた回数とまちがえた回数を数えるだけ）。上の画面で2問打つと右に「練習中の言葉」が出て、「練習中の言葉で次へ」がそれを多くふくむ問題を選びます（選んだ理由も出す）。「苦手」と決めつけない言い方にして、右の切りかえで止めることもできます。</p>
   <div class="adapt">
-    <div class="note"><b>① 言葉の苦手</b>言葉ごとに「出てきた回数」と「まちがえた回数」を数え、まちがえやすさを出す。何度も正しく打てたら、だんだん下がる（忘れる・覚えるが反映される）。</div>
-    <div class="note"><b>② 次に出す問題</b>「苦手な言葉が多く入っている」＋「しばらく打っていない（忘れかけ）」＋「まだ打っていない」を足した点数の高い順。毎回同じにならないよう、少しだけばらつかせる。</div>
-    <div class="note"><b>③ 指・記号の苦手</b>まちがえ方も記録する（<code>(</code> を <code>9</code>、<code>reduse</code> のような打ちまちがい）。記号ばかり外す人には、記号の多い問題を足す。</div>
-    <div class="note"><b>④ 苦手から問題を作る</b>問題が足りないときは、苦手な言葉を入れた短いコードを AI が作る。自分の学習帳の問題をもとにすれば、仕事で使うコードのまま練習できる。</div>
-    <div class="note"><b>⑤ スマホにつなぐ</b>苦手な言葉は、スマホの「穴うめ」の空欄と「どこがおかしい？」のまちがいに使う。PC で外した所を、すき間時間に思い出す。</div>
+    <div class="note"><b>① まちがえやすい言葉</b>言葉ごとに「出てきた回数」と「まちがえた回数」を数え、まちがえやすさを出す。何度も正しく打てたら、だんだん下がる（忘れる・覚えるが反映される）。</div>
+    <div class="note"><b>② 次に出す問題</b>「練習中の言葉が多く入っている」＋「しばらく打っていない（忘れかけ）」＋「まだ打っていない」を足した点数の高い順。毎回同じにならないよう、少しだけばらつかせる。</div>
+    <div class="note"><b>③ 指・記号のくせ</b>まちがえ方も記録する（<code>(</code> を <code>9</code>、<code>reduse</code> のような打ちまちがい）。記号ばかり外す人には、記号の多い問題を足す。</div>
+    <div class="note"><b>④ 練習中の言葉から問題を作る</b>問題が足りないときは、練習中の言葉を入れた短いコードを AI が作る。自分の学習帳の問題をもとにすれば、仕事で使うコードのまま練習できる。</div>
+    <div class="note"><b>⑤ スマホにつなぐ</b>練習中の言葉は、スマホの「穴うめ」の空欄と「どこがおかしい？」のまちがいに使う。PC で外した所を、すき間時間に思い出す。</div>
   </div>
 
   <!-- ================= 学習記録（草） ================= -->
   <h2 class="sec">🌱 学習記録は草で</h2>
   <p>1日に打った文字の数で色の濃さが変わります。上で1問打つと、きょうのマスが濃くなります（去年の分はサンプル）。マスにマウスをのせると、その日の問題数・文字数が出ます。</p>
-  <div class="records">
+  <div class="records" id="records">
     <div class="rec-tiles">
       <div><b id="gStreak">0</b><span>日つづけて</span></div>
       <div><b id="gDays">0</b><span>日 練習した（期間内）</span></div>
@@ -307,23 +347,20 @@
 
   <!-- ================= スマホ ================= -->
   <h2 class="sec">📱 スマホ：打たずに「思い出す」</h2>
-  <p>スマホでコードを長く打つのはつらいので、同じ問題（学習帳）を、指で選ぶ・並べる・当てる遊びにします。1回30秒くらい、電車の中でも。</p>
+  <p>スマホでコードを長く打つのはつらいので、同じ問題（学習帳）を、指で選ぶ・並べる・当てる遊びにします。1回30秒くらい、電車の中でも。①の穴うめは実際にタップで遊べます（②〜④は見た目だけ）。</p>
 
   <div class="phones">
     <div class="phone-wrap">
-      <h3>① 穴うめ</h3>
+      <h3>① 穴うめ <span class="tag">タップで遊べます</span></h3>
       <p>コードの一部が空いていて、入る言葉を選ぶ（短ければ打つ）。キーワードや関数名をおぼえる。</p>
-      <div class="phone">
-        <div class="p-top"><span class="logo">Rct</span><span>3 / 10　🔥 4</span></div>
-        <div class="p-bar"><i style="width:30%"></i></div>
+      <div class="phone" id="fillPhone">
+        <div class="p-top"><span class="logo">Rct</span><span id="fTop"></span></div>
+        <div class="p-bar"><i id="fBar"></i></div>
         <div class="p-q">空いている所に入るのは？</div>
-<div class="p-code"><span class="t-kw">for</span> <span class="t-pl">i</span> <span class="t-kw">in</span> <span class="blank">？</span><span class="t-op">(</span><span class="t-num">10</span><span class="t-op">):</span>
-    <span class="t-bi">print</span><span class="t-op">(</span><span class="t-pl">i</span> <span class="t-op">*</span> <span class="t-num">2</span><span class="t-op">)</span></div>
-        <div class="p-choices">
-          <div class="p-choice">len</div><div class="p-choice right">range</div>
-          <div class="p-choice">list</div><div class="p-choice">enumerate</div>
-        </div>
-        <div class="p-foot"><div class="p-btn">💡 ヒント</div><div class="p-btn primary">次へ</div></div>
+        <div class="p-code" id="fCode"></div>
+        <div class="p-choices" id="fChoices"></div>
+        <div class="p-out" id="fOut"></div>
+        <div class="p-foot"><button class="p-btn" id="fHint">💡 ヒント</button><button class="p-btn primary" id="fNext" disabled>次へ</button></div>
       </div>
     </div>
 
@@ -336,8 +373,8 @@
         <div class="p-q">正しい順にならべよう</div>
         <div class="p-line"><span class="grip">⋮⋮</span><span class="t-kw">def</span> <span class="t-fn">total</span><span class="t-op">(</span>nums<span class="t-op">):</span></div>
         <div class="p-line"><span class="grip">⋮⋮</span>    s <span class="t-op">=</span> <span class="t-num">0</span></div>
-        <div class="p-line lift"><span class="grip">⋮⋮</span>    <span class="t-kw">for</span> n <span class="t-kw">in</span> nums<span class="t-op">:</span></div>
-        <div class="p-line"><span class="grip">⋮⋮</span>    <span class="t-kw">return</span> s</div>
+        <div class="p-line lift"><span class="grip">⋮⋮</span>    <span class="t-ctl">for</span> n <span class="t-ctl">in</span> nums<span class="t-op">:</span></div>
+        <div class="p-line"><span class="grip">⋮⋮</span>    <span class="t-ctl">return</span> s</div>
         <div class="p-line"><span class="grip">⋮⋮</span>        s <span class="t-op">+=</span> n</div>
         <div class="p-foot"><div class="p-btn">← 字下げ →</div><div class="p-btn primary">これで合ってる？</div></div>
       </div>
@@ -443,11 +480,17 @@ const KW = {
   JavaScript: "const let var function return if else for of in while new class this true false null undefined await async import export",
   SQL: "SELECT FROM WHERE GROUP BY HAVING ORDER DESC ASC AS AND OR NOT JOIN LEFT INNER ON LIMIT INSERT INTO VALUES UPDATE SET DELETE COUNT SUM IS NULL",
 };
+/* for・if・return など流れを変える言葉は紫（Dark+ と同じ分け方） */
+const CTL = {
+  Python: "return for in if elif else while import from try except pass break continue yield with as raise",
+  JavaScript: "return if else for of in while import export await try catch break continue",
+  SQL: "",
+};
 const BI = { Python: "print len range list dict str int", JavaScript: "console Math JSON Array Object", SQL: "" };
 
 /* かんたんなハイライト：1字ずつ色の種類を返す */
 function tokenize(code, lang) {
-  const kw = new Set(KW[lang].split(" ")), bi = new Set(BI[lang].split(" "));
+  const kw = new Set(KW[lang].split(" ")), bi = new Set(BI[lang].split(" ")), ctl = new Set(CTL[lang].split(" "));
   const com = { Python: "#.*", JavaScript: "\\/\\/.*", SQL: "--.*" }[lang];
   const re = new RegExp(`(${com})|("(?:[^"\\\\]|\\\\.)*"|'(?:[^'\\\\]|\\\\.)*'|\`[^\`]*\`)|(\\b\\d+(?:\\.\\d+)?\\b)|([A-Za-z_]\\w*)|([=+\\-*/<>!&|%.,:;(){}\\[\\]]+)|(\\s|.)`, "g");
   const out = []; let m;
@@ -458,7 +501,7 @@ function tokenize(code, lang) {
     else if (m[3]) cls = "t-num";
     else if (m[4]) {
       const w = m[4];
-      if (kw.has(lang === "SQL" ? w.toUpperCase() : w)) cls = "t-kw";
+      if (kw.has(lang === "SQL" ? w.toUpperCase() : w)) cls = ctl.has(w) ? "t-ctl" : "t-kw";
       else if (bi.has(w)) cls = "t-bi";
       else if (code[re.lastIndex] === "(") cls = "t-fn";
     } else if (m[5]) cls = "t-op";
@@ -466,6 +509,26 @@ function tokenize(code, lang) {
   }
   return out;
 }
+
+/* ===== 効果音（Web Audio で鳴らす。音のファイルはいらない） ===== */
+const Sound = {
+  on: (() => { try { return localStorage.getItem("rct-mock:se") !== "off"; } catch (_) { return true; } })(),
+  ctx: null,
+  beep(freq, dur, type, vol, when = 0) {
+    if (!this.on) return;
+    try {
+      this.ctx = this.ctx || new (window.AudioContext || window.webkitAudioContext)();
+      const t = this.ctx.currentTime + when, o = this.ctx.createOscillator(), g = this.ctx.createGain();
+      o.type = type; o.frequency.value = freq;
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g).connect(this.ctx.destination); o.start(t); o.stop(t + dur);
+    } catch (_) {}
+  },
+  type() { this.beep(1800, 0.03, "square", 0.012); },
+  miss() { this.beep(150, 0.12, "sawtooth", 0.035); },
+  ok() { this.beep(880, 0.08, "triangle", 0.05); this.beep(1320, 0.12, "triangle", 0.05, 0.07); },
+  clear() { [523, 659, 784, 1047].forEach((f, i) => this.beep(f, 0.2, "triangle", 0.06, i * 0.09)); },
+};
 
 /* ===== ゲーム ===== */
 const $ = (id) => document.getElementById(id);
@@ -513,17 +576,19 @@ function pickNext(curP) {
     if (!best || score > best.score) best = { i, score, hits, last };
   });
   const why = best.hits.length
-    ? `苦手な ${best.hits.slice(0, 3).map((t) => `<code>${esc(t)}</code>`).join(" ")} が入っているから`
+    ? `練習中の ${best.hits.slice(0, 3).map((t) => `<code>${esc(t)}</code>`).join(" ")} が入っているから`
     : best.last ? "しばらく打っていないから" : "まだ打っていない問題だから";
   return { i: best.i, why };
 }
 function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+const WEAK_AFTER = 2; /* 何問か打つまでは出さない */
 function drawWeak() {
-  const S = weakStats(), top = topWeak(S, 6);
+  const S = weakStats(), top = topWeak(S, 6), done = Repo.list(Auth.current().id).length;
+  if (done < WEAK_AFTER) { $("weakList").innerHTML = `<div class="weak-empty">あと ${WEAK_AFTER - done} 問打つと、まちがえやすい言葉がここに出ます。打ちまちがいも入るので、気にしすぎなくて大丈夫です。</div>`; return; }
   $("weakList").innerHTML = top.length
     ? top.map((t) => `<div class="weak-row"><span>${esc(t)}</span><span class="m"><i style="width:${Math.round(weakness(S, t) * 100)}%"></i></span><span>${S.tok[t].miss}</span></div>`).join("")
       + `<button class="chip" id="weakReset" style="margin-top:6px;align-self:flex-start">記録を消す</button>`
-    : `<div class="weak-empty">まだありません。まちがえた言葉がここにたまり、次の問題えらびに使われます。</div>`;
+    : `<div class="weak-empty">いまは練習中の言葉はありません ✨</div>`;
   const r = $("weakReset"); if (r) r.onclick = () => { Repo.clear(); cur = { miss: {} }; refresh(); editor.focus(); };
 }
 
@@ -570,6 +635,14 @@ function drawGrass() {
   /* 連続日数（きょうまだなら、きのうまでで数える） */
   let streak = 0; for (let t = +today - (days[dayKey(+today)] ? 0 : DAY); days[dayKey(t)]; t -= DAY) streak++;
   let best = 0, run = 0; for (let t = +start; t <= +today; t += DAY) { run = days[dayKey(t)] ? run + 1 : 0; best = Math.max(best, run); }
+  /* ゲームのすぐ下に出す小さい草（直近12週） */
+  let mini = ""; const mStart = +today - (11 * 7 + today.getDay()) * DAY;
+  for (let i = 0; i < 84; i++) {
+    const t = mStart + i * DAY; if (t > +today) { mini += `<i style="visibility:hidden"></i>`; continue; }
+    const x = days[dayKey(t)]; mini += `<i class="l${lv(x && x.chars)}${t === +today ? " today" : ""}"></i>`;
+  }
+  const tx = days[dayKey(+today)];
+  $("miniGrass").innerHTML = mini; $("mStreak").textContent = streak; $("mToday").textContent = tx && !tx.sample ? tx.chars : 0;
   $("gStreak").textContent = streak; $("gDays").textContent = active; $("gChars").textContent = total.toLocaleString(); $("gBest").textContent = best + "日";
   $("gRange").innerHTML = "直近1年分";
   /* 言語の割合（実際に打った分） */
@@ -614,8 +687,8 @@ function load(i) {
   });
   $("lines").innerHTML = html;
   /* 1字ごとに、その字が入っている言葉を覚えておく（苦手を言葉で数えるため） */
-  const re = /[A-Za-z_]\w*|=>|>=|<=|\+=|[(){}\[\];:.,=<>*+\-"'`]/g; let m;
-  while ((m = re.exec(code))) for (let j = m.index; j < re.lastIndex; j++) chars[j].tok = m[0];
+  const re = /[A-Za-z_]\w*|=>|>=|<=|\+=|[(){}\[\];:.,=<>*+\-"'`]/g; let m, wi = 0;
+  while ((m = re.exec(code))) { for (let j = m.index; j < re.lastIndex; j++) { chars[j].tok = m[0]; chars[j].w = wi; } wi++; }
   reset(); if (typeof drawFoot === "function") { drawFoot(); drawWeak(); }
 }
 
@@ -630,6 +703,10 @@ function skipAuto() { while (pos < chars.length && chars[pos].auto) { el(pos).cl
 function paint() {
   editor.querySelectorAll(".c.cur").forEach((c) => c.classList.remove("cur"));
   editor.querySelectorAll(".ln.active").forEach((c) => c.classList.remove("active"));
+  /* 「言葉だけ」のとき、いま打つ言葉だけを見せる */
+  editor.querySelectorAll(".c.near").forEach((c) => c.classList.remove("near"));
+  let k = pos; while (k < chars.length && chars[k].w === undefined) k++;
+  if (k < chars.length) chars.forEach((x, i) => { if (x.w === chars[k].w) el(i).classList.add("near"); });
   const c = el(pos); if (!c) return;
   c.classList.add("cur"); c.closest(".ln").classList.add("active");
 }
@@ -647,7 +724,7 @@ function rank(score) {
   return R.find((r) => score >= r[0]);
 }
 function finish() {
-  clearInterval(timer);
+  clearInterval(timer); Sound.clear();
   const { sec, wpm, acc } = stats();
   const r = rank(Math.round(wpm * acc / 100));
   $("rRank").textContent = r[1]; $("rRankNote").textContent = r[2];
@@ -658,11 +735,10 @@ function finish() {
     startedAt: started, ms: Math.round(sec * 1000), chars: chars.filter((c) => !c.auto).length, wpm, acc,
     miss: cur.miss, seen: tokensOf(PROBLEMS[P].code), device: "pc", mode: "type" });
   cur = { miss: {} }; refresh();
-  nextPick = pickNext(P);
-  $("rNext").innerHTML = `🎯 次は <b>${PROBLEMS[nextPick.i].lang}</b>：${nextPick.why}`;
+  setNext();
   const worst = Object.entries(missAt).sort((a, b) => b[1] - a[1]).slice(0, 3);
   $("rMiss").innerHTML = worst.length
-    ? "😣 まちがえた所：" + worst.map(([w, n]) => `<code>${w.replace(/</g, "&lt;")}</code>×${n}`).join(" ") + "<br>→ スマホの「どこがおかしい？」に出ます"
+    ? "🔁 次にねらう所：" + worst.map(([w, n]) => `<code>${w.replace(/</g, "&lt;")}</code>×${n}`).join(" ") + "<br>→ スマホの「どこがおかしい？」でも出ます"
     : "✨ ノーミス！";
   $("result").hidden = false;
 }
@@ -685,11 +761,11 @@ editor.addEventListener("keydown", (e) => {
   if (!started) { started = Date.now(); timer = setInterval(stats, 100); }
   const c = el(pos);
   if (key === chars[pos].ch) {
-    c.classList.remove("err"); c.classList.add("done"); pos++; combo++; maxCombo = Math.max(maxCombo, combo);
+    c.classList.remove("err"); c.classList.add("done"); pos++; combo++; maxCombo = Math.max(maxCombo, combo); Sound.type();
     skipAuto();
     if (pos >= chars.length) { paint(); finish(); return; }
   } else {
-    miss++; combo = 0; const w = wordAt(pos); missAt[w] = (missAt[w] || 0) + 1;
+    miss++; combo = 0; Sound.miss(); const w = wordAt(pos); missAt[w] = (missAt[w] || 0) + 1;
     const t = chars[pos].tok || (chars[pos].ch === "\n" ? "Enter" : chars[pos].ch === " " ? "Space" : chars[pos].ch);
     cur.miss[t] = (cur.miss[t] || 0) + 1; drawWeak();
     c.classList.remove("err"); void c.offsetWidth; c.classList.add("err");
@@ -700,15 +776,64 @@ editor.addEventListener("keydown", (e) => {
 ["paste", "drop"].forEach((t) => document.addEventListener(t, (e) => { e.preventDefault(); toast("📋 貼り付けはできません。打って覚えよう"); }));
 editor.addEventListener("focus", () => ($("cover").style.display = "none"));
 editor.addEventListener("blur", () => { if ($("result").hidden && pos < chars.length) $("cover").style.display = ""; });
-$("ghostToggle").addEventListener("change", (e) => { editor.classList.toggle("hidden-ghost", !e.target.checked); editor.focus(); });
+const GHOST_NOTE = { all: "お手本が全部うすく見える", word: "いま打つ言葉だけ見える。ほかは思い出して打つ", none: "打った所だけ出る。全部思い出して打つ" };
+function setGhost(g) {
+  editor.classList.toggle("ghost-word", g === "word"); editor.classList.toggle("hidden-ghost", g === "none");
+  document.querySelectorAll("#ghostChips .chip").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.g === g)));
+  $("ghostNote").textContent = GHOST_NOTE[g];
+}
+$("ghostChips").addEventListener("click", (e) => { const b = e.target.closest(".chip"); if (b) { setGhost(b.dataset.g); editor.focus(); } });
+setGhost("all");
+const adapt = () => $("adaptToggle").checked;
+function setNext() {
+  nextPick = adapt() ? pickNext(P) : { i: (P + 1) % PROBLEMS.length, why: "順番どおり" };
+  $("next").textContent = adapt() ? "練習中の言葉で次へ →" : "次の問題へ →";
+  $("rNext").innerHTML = adapt() ? `🎯 次は <b>${PROBLEMS[nextPick.i].lang}</b>：${nextPick.why}` : `▶ 次は <b>${PROBLEMS[nextPick.i].lang}</b>（順番どおり）`;
+}
+$("adaptToggle").addEventListener("change", () => { if (!$("result").hidden) setNext(); else $("next").textContent = adapt() ? "練習中の言葉で次へ →" : "次の問題へ →"; });
 $("again").addEventListener("click", () => { reset(); editor.focus(); });
 let nextPick = null;
 $("next").addEventListener("click", () => { load((nextPick || pickNext(P)).i); editor.focus(); });
 
+function drawSe() { $("seToggle").setAttribute("aria-pressed", String(Sound.on)); $("seToggle").textContent = Sound.on ? "🔊 効果音 オン" : "🔇 効果音 オフ"; }
+$("seToggle").addEventListener("click", () => { Sound.on = !Sound.on; try { localStorage.setItem("rct-mock:se", Sound.on ? "on" : "off"); } catch (_) {} drawSe(); editor.focus(); });
+drawSe();
+
 let tt; function toast(m) { const t = $("toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 1800); }
 
 $("userName").textContent = "👤 " + Auth.current().name;
-buildChips(); load(0); refresh();
+/* ===== スマホ：穴うめ（タップで遊べる） ===== */
+const FILL = [
+  { lang: "Python", code: "for i in ___(10):\n    print(i * 2)", choices: ["len", "range", "list", "enumerate"], answer: "range", hint: "0〜9 の数を順に作る関数" },
+  { lang: "JavaScript", code: "const total = prices\n  .___((sum, p) => sum + p, 0);", choices: ["map", "filter", "reduce", "forEach"], answer: "reduce", hint: "配列を1つの値（合計）にまとめる" },
+  { lang: "SQL", code: "SELECT dept, COUNT(*)\nFROM users\nGROUP BY dept\n___ COUNT(*) > 3;", choices: ["WHERE", "HAVING", "ORDER BY", "LIMIT"], answer: "HAVING", hint: "GROUP BY でまとめたあとの条件" },
+];
+function hl(code, lang) { const cls = tokenize(code, lang); return [...code].map((ch, i) => `<span class="${cls[i]}">${esc(ch)}</span>`).join(""); }
+const F = { i: 0, streak: 0, done: false };
+function fillTop(n) { $("fTop").textContent = `${F.i + 1} / ${FILL.length}　🔥 ${F.streak}`; $("fBar").style.width = (n / FILL.length) * 100 + "%"; }
+function fillLoad() {
+  const q = FILL[F.i]; F.done = false; fillTop(F.i);
+  $("fCode").innerHTML = q.code.split("___").map((part) => hl(part, q.lang)).join('<span class="blank" id="fBlank">？</span>');
+  $("fChoices").innerHTML = q.choices.map((c) => `<button class="p-choice">${esc(c)}</button>`).join("");
+  $("fOut").textContent = ""; $("fNext").disabled = true; $("fNext").textContent = "次へ";
+}
+$("fChoices").addEventListener("click", (e) => {
+  const b = e.target.closest(".p-choice"); if (!b || F.done) return;
+  const q = FILL[F.i];
+  if (b.textContent === q.answer) {
+    F.done = true; F.streak++; b.classList.add("right"); Sound.ok();
+    const bl = $("fBlank"); bl.textContent = q.answer; bl.classList.add("fill");
+    $("fOut").textContent = "✅ 正解！"; $("fNext").disabled = false; fillTop(F.i + 1);
+    if (F.i === FILL.length - 1) $("fNext").textContent = "もう一度";
+  } else {
+    F.streak = 0; Sound.miss(); b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong");
+    $("fOut").textContent = "おしい！ もう一度"; fillTop(F.i);
+  }
+});
+$("fHint").addEventListener("click", () => ($("fOut").textContent = "💡 " + FILL[F.i].hint));
+$("fNext").addEventListener("click", () => { F.i = (F.i + 1) % FILL.length; if (F.i === 0) F.streak = 0; fillLoad(); });
+
+buildChips(); load(0); refresh(); fillLoad();
 </script>
 </body>
 </html>
