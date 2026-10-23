@@ -1,0 +1,30 @@
+name: 感想を送る
+description: Rct ゲーム化の案を見た感想
+title: "感想: "
+labels: ["feedback"]
+body:
+  - type: textarea
+    id: fun
+    attributes:
+      label: 楽しそう・よさそうだと思ったところ
+      placeholder: 例）色がつくのが気持ちいい
+  - type: textarea
+    id: unclear
+    attributes:
+      label: わかりにくい・気になったところ
+  - type: textarea
+    id: want
+    attributes:
+      label: ほしい機能・いらない機能
+  - type: dropdown
+    id: device
+    attributes:
+      label: どれで見ましたか
+      options:
+        - PC
+        - スマホ
+        - 両方
+  - type: textarea
+    id: other
+    attributes:
+      label: そのほか、なんでも
