@@ -134,6 +134,25 @@
   .mini-grass { display: grid; grid-template-rows: repeat(7, 9px); grid-auto-flow: column; grid-auto-columns: 9px; gap: 2px; }
   .mini-grass i { width: 9px; height: 9px; border-radius: 2px; }
   .mini-grass i.today { outline: 1.5px solid var(--cur); outline-offset: 1px; }
+  .snip-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: var(--sub); }
+  .snip-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-bottom: 8px; }
+  .snip-head b { color: var(--text); font-size: 14px; }
+  .snip-count { font-family: var(--mono); color: var(--brand-d); font-weight: 700; }
+  .snip-help { flex: 1 1 280px; font-size: 12px; line-height: 1.7; }
+  .snip-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .snip-item { display: inline-flex; align-items: center; gap: 6px; background: #f3f6fc; border: 1px solid var(--line); border-radius: 10px; padding: 4px 4px 4px 10px; font-family: var(--mono); font-size: 13px; color: var(--sub); }
+  .snip-item .k { color: var(--brand-d); font-weight: 700; }
+  .snip-item .b { color: var(--text); white-space: pre; }
+  .snip-item button { border: 0; background: transparent; color: var(--sub); cursor: pointer; font-size: 16px; line-height: 1; padding: 2px 6px; }
+  .snip-add { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto; gap: 8px; }
+  .snip-add[hidden] { display: none; }
+  .snip-add input { -webkit-appearance: none; appearance: none; min-width: 0; font-family: var(--mono); font-size: 16px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--text); }
+  .snip-add .btn { padding: 8px 14px; }
+  .snip-full { font-size: 12px; background: #f3f6fc; border-radius: 10px; padding: 8px 12px; }
+  .snip-full[hidden] { display: none; }
+  @media (max-width: 560px) { .snip-add { grid-template-columns: minmax(0, 1fr); } }
+  .g-foot .on { color: var(--cur); }
+  .c.snip.done { text-decoration: underline dotted #87aae6; text-underline-offset: 5px; }
   .mini-rec a { margin-left: auto; color: var(--brand-d); font-weight: 700; text-decoration: none; }
   .grass i.locked { background: repeating-linear-gradient(45deg, #f1f3f8, #f1f3f8 3px, #e6eaf2 3px, #e6eaf2 6px); }
   .grass-foot { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--sub); margin-top: 8px; flex-wrap: wrap; gap: 8px; }
@@ -229,7 +248,7 @@
 
   <div class="intro">
     <div class="what"><b>見てほしいところ</b>（5分くらい）
-      <ol><li>下の黒い枠で、2問ほど打ってみる（英数入力で）</li>
+      <ol><li>下の黒い枠で、2問ほど打ってみる（英数入力で）。<code>print(</code> などの所で Tab を押すと、スニペットが入る</li>
       <li>右の「色テーマ」「お手本の見せ方」と、下の効果音を切りかえてみる</li>
       <li>スマホの「穴うめ」をタップで遊んでみる</li></ol></div>
     <a class="fb-btn" href="https://github.com/katsuan/rct-mock/issues/new?template=feedback.yml" target="_blank" rel="noopener">✏️ 感想を送る</a>
@@ -243,6 +262,7 @@
         <li>打つ音・まちがえた音・クリアの音（オン／オフ付き）。BGM はモックでは省略（本番では入れる）</li>
         <li>ゲームのすぐ下に、草の小さい版を置いた</li>
         <li>スマホの「穴うめ」をタップで遊べるように</li>
+        <li>実務のコピペに近い使い方として、スニペット（5つまで保存・Tab で呼び出し）を足した</li>
       </ul>
     </details>
   </div>
@@ -313,17 +333,29 @@
             <li>行頭の字下げは自動で入る</li>
             <li>行の終わりは <span class="kbd">Enter</span></li>
             <li>貼り付けはできない</li>
+            <li><span class="kbd">Tab</span> でスニペットを呼び出す</li>
             <li><span class="kbd">Esc</span> でやり直し</li>
           </ul>
         </div>
       </aside>
     </div>
-    <div class="g-foot"><button class="chip" id="seToggle" aria-pressed="true">🔊 効果音 オン</button><span title="本番では入れます">🎵 BGM（モックでは省略）</span><span id="footBest">🏆 自己ベスト ―</span><span id="footToday">🌱 きょう 0問</span></div>
+    <div class="g-foot"><button class="chip" id="seToggle" aria-pressed="true">🔊 効果音 オン</button><span title="本番では入れます">🎵 BGM（モックでは省略）</span><span id="snipNow"></span><span id="footBest">🏆 自己ベスト ―</span><span id="footToday">🌱 きょう 0問</span></div>
   </div>
   <div class="mini-rec">
     <span>🌱 <b id="mStreak">0</b> 日つづけて ・ きょう <b id="mToday">0</b> 文字</span>
     <div class="mini-grass" id="miniGrass" aria-label="直近12週の記録"></div>
     <a href="#records">くわしい記録 ↓</a>
+  </div>
+  <div class="snip-card">
+    <div class="snip-head"><b>✂️ マイスニペット</b><span class="snip-count" id="snipCount"></span>
+      <span class="snip-help">よく使う形を呼び名つきで保存。次に打つ所がスニペットと同じなら <span class="kbd">Tab</span> で呼び出して入れられます（入れた分は打った文字に数えない）。</span></div>
+    <div class="snip-list" id="snipList"></div>
+    <form class="snip-add" id="snipAdd" autocomplete="off">
+      <input id="snipKey" placeholder="呼び名（例: le）" maxlength="12" aria-label="呼び名">
+      <input id="snipBody" placeholder="中身（例: len(）" maxlength="80" aria-label="中身">
+      <button class="btn primary">＋ 保存</button>
+    </form>
+    <div class="snip-full" id="snipFull" hidden></div>
   </div>
 
   <div class="notes">
@@ -332,6 +364,7 @@
     <div class="note"><b>③ ゲームらしさ</b>コンボ・WPM・自己ベスト・ランク（今の初段〜4級をそのまま）。まちがえた所は結果に出して「練習中の言葉」に入れ、あとでスマホで復習。</div>
     <div class="note"><b>④ 思い出して打つ</b>お手本の見せ方は「全部」→「言葉だけ」→「見せない」の3段階。いきなり全部隠さず、少しずつ見ないで打てるようにする。Remind（思い出す）の名前どおり。</div>
     <div class="note"><b>⑤ 音でも気持ちよく</b>打つ音・まちがえた音・クリアの音が鳴る（下の「🔊 効果音」で切りかえ）。BGM は本番で入れる（モックでは省略）。</div>
+    <div class="note"><b>⑥ スニペットで入力補助</b>よく使う形を呼び名つきで保存（5つまで）。次に打つ所と同じなら Tab で呼び出せる。呼び出した分は打った文字に数えず、ランキングにも入れない。実務のコピペに近い使い方を、ずるにならない形で入れる。</div>
   </div>
 
   <!-- ================= 苦手に合わせた出題 ================= -->
@@ -555,7 +588,7 @@ const editor = $("editor");
 let P, chars, pos, started, timer, miss, combo, maxCombo, missAt;
 
 const Auth = { current() { return { id: "mock-user", name: "モックユーザー" }; } };
-const FEATURES = { "grass.weeks": 53, "weak.window": Infinity, "problems.custom": Infinity };
+const FEATURES = { "grass.weeks": 53, "weak.window": Infinity, "problems.custom": Infinity, "snippets.slots": 5 };
 function can(feature) { return FEATURES[feature]; }
 const Repo = {
   KEY: "rct-mock:attempts",
@@ -563,6 +596,39 @@ const Repo = {
   add(a) { let all = []; try { all = JSON.parse(localStorage.getItem(this.KEY)) || []; } catch (_) {} all.push(a); try { localStorage.setItem(this.KEY, JSON.stringify(all)); } catch (_) {} },
   clear() { try { localStorage.removeItem(this.KEY); } catch (_) {} },
 };
+
+/* ===== スニペット ===== */
+const Snips = {
+  KEY: "rct-mock:snippets",
+  seed: [{ key: "pr", body: "print(" }, { key: "cl", body: "console.log(" }, { key: "sel", body: "SELECT " }, { key: "ret", body: "return " }],
+  list() { try { const v = JSON.parse(localStorage.getItem(this.KEY)); if (Array.isArray(v)) return v; } catch (_) {} return this.seed.slice(); },
+  save(v) { try { localStorage.setItem(this.KEY, JSON.stringify(v)); } catch (_) {} },
+};
+let snips = Snips.list(), snipUsed = 0, snipChars = 0;
+/* 次に打つ所が、どれかのスニペットとまったく同じなら、それを返す */
+function findSnip(k) { const code = PROBLEMS[P].code; return snips.find((x) => x.body && code.startsWith(x.body, k)); }
+function drawSnipHint() {
+  const x = chars && pos < chars.length && findSnip(pos);
+  $("snipNow").innerHTML = x ? `✂️ <span class="kbd">Tab</span> で「${esc(x.key)}」を呼べる` : "✂️ Tab：ここでは呼べない";
+  $("snipNow").classList.toggle("on", !!x);
+}
+function drawSnips() {
+  const max = can("snippets.slots"), full = snips.length >= max;
+  $("snipCount").textContent = `${snips.length} / ${max}`;
+  $("snipList").innerHTML = snips.map((x, i) => `<span class="snip-item"><code class="k">${esc(x.key)}</code>→<code class="b">${esc(x.body)}</code><button type="button" data-i="${i}" title="消す" aria-label="${esc(x.key)} を消す">×</button></span>`).join("")
+    || `<span class="weak-empty" style="color:var(--sub)">まだありません</span>`;
+  $("snipAdd").hidden = full; $("snipFull").hidden = !full;
+  $("snipFull").textContent = `${max}つまで保存できます。どれかを消すと、新しく保存できます。`;
+  drawSnipHint();
+}
+function useSnip() {
+  const x = findSnip(pos); if (!x) { toast("ここで呼び出せるスニペットはありません"); return; }
+  if (!started) { started = Date.now(); timer = setInterval(stats, 100); }
+  for (let j = 0; j < x.body.length; j++) { chars[pos].snip = true; const c = el(pos); c.classList.remove("err"); c.classList.add("done", "snip"); pos++; }
+  snipUsed++; snipChars += x.body.length; Sound.ok();
+  skipAuto(); if (pos >= chars.length) { paint(); finish(); return; }
+  paint(); stats();
+}
 
 /* ===== 苦手：すべて attempt（1回打った記録）から計算する ===== */
 function tokensOf(code) { return [...new Set(code.match(/[A-Za-z_]\w*|=>|>=|<=|\+=|[(){}\[\];:.,=<>*+\-"'`]/g) || [])]; }
@@ -679,7 +745,7 @@ function drawFoot() {
   $("footToday").textContent = `🌱 きょう ${today.length}問・${today.reduce((s, a) => s + a.chars, 0)}文字`;
   $("footBest").textContent = `🏆 この問題の自己ベスト ${best ? best + " WPM" : "―"}`;
 }
-function refresh() { drawWeak(); drawGrass(); drawFoot(); }
+function refresh() { drawWeak(); drawGrass(); drawFoot(); drawSnips(); }
 
 function buildChips() {
   $("langChips").innerHTML = PROBLEMS.map((p, i) => `<button class="chip" data-i="${i}" aria-pressed="false">${p.lang} ${PROBLEMS.slice(0, i).filter((q) => q.lang === p.lang).length + 1}</button>`).join("");
@@ -713,9 +779,10 @@ function load(i) {
 
 function el(k) { return editor.querySelector(`.c[data-k="${k}"]`); }
 function reset() {
-  pos = 0; started = 0; miss = 0; combo = 0; maxCombo = 0; missAt = {}; cur = { miss: {} };
+  pos = 0; started = 0; miss = 0; combo = 0; maxCombo = 0; missAt = {}; cur = { miss: {} }; snipUsed = 0; snipChars = 0;
+  chars.forEach((x) => delete x.snip);
   clearInterval(timer);
-  editor.querySelectorAll(".c").forEach((c) => c.classList.remove("done", "err", "cur"));
+  editor.querySelectorAll(".c").forEach((c) => c.classList.remove("done", "err", "cur", "snip"));
   $("result").hidden = true; skipAuto(); paint(); stats();
 }
 function skipAuto() { while (pos < chars.length && chars[pos].auto) { el(pos).classList.add("done"); pos++; } }
@@ -726,12 +793,13 @@ function paint() {
   editor.querySelectorAll(".c.near").forEach((c) => c.classList.remove("near"));
   let k = pos; while (k < chars.length && chars[k].w === undefined) k++;
   if (k < chars.length) chars.forEach((x, i) => { if (x.w === chars[k].w) el(i).classList.add("near"); });
+  drawSnipHint();
   const c = el(pos); if (!c) return;
   c.classList.add("cur"); c.closest(".ln").classList.add("active");
 }
 function stats() {
   const sec = started ? (Date.now() - started) / 1000 : 0;
-  const typed = chars.slice(0, pos).filter((c) => !c.auto).length;
+  const typed = chars.slice(0, pos).filter((c) => !c.auto && !c.snip).length; /* スニペットで入れた分は数えない */
   const wpm = sec > 1 ? Math.round(typed / 5 / (sec / 60)) : 0;
   const acc = typed + miss ? Math.round((typed / (typed + miss)) * 100) : 100;
   $("sTime").textContent = sec.toFixed(1); $("sWpm").textContent = wpm; $("sAcc").textContent = acc; $("sCombo").textContent = combo;
@@ -752,13 +820,14 @@ function finish() {
   /* 1回打った記録を1件残す。草・苦手・自己ベストはここから計算 */
   Repo.add({ id: Date.now().toString(36), userId: Auth.current().id, problemId: P, lang: PROBLEMS[P].lang,
     startedAt: started, ms: Math.round(sec * 1000), chars: chars.filter((c) => !c.auto).length, wpm, acc,
-    miss: cur.miss, seen: tokensOf(PROBLEMS[P].code), device: "pc", mode: "type" });
+    miss: cur.miss, seen: tokensOf(PROBLEMS[P].code), device: "pc", mode: "type", snip: snipUsed });
   cur = { miss: {} }; refresh();
   setNext();
   const worst = Object.entries(missAt).sort((a, b) => b[1] - a[1]).slice(0, 3);
   $("rMiss").innerHTML = worst.length
     ? "🔁 次にねらう所：" + worst.map(([w, n]) => `<code>${w.replace(/</g, "&lt;")}</code>×${n}`).join(" ") + "<br>→ スマホの「どこがおかしい？」でも出ます"
     : "✨ ノーミス！";
+  if (snipUsed) $("rMiss").innerHTML += `<br>✂️ スニペット ${snipUsed}回（入れた ${snipChars} 文字は数えない・ランキング対象外）`;
   $("result").hidden = false;
 }
 function wordAt(k) {
@@ -772,6 +841,7 @@ editor.addEventListener("keydown", (e) => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   if (!$("result").hidden) { if (e.key === "Enter") { e.preventDefault(); reset(); } return; }
   if (e.key === "Escape") { reset(); return; }
+  if (e.key === "Tab") { e.preventDefault(); useSnip(); return; }
   let key = e.key === "Enter" ? "\n" : e.key === "Tab" ? "\t" : e.key;
   if (key.length !== 1 && key !== "\n") return;
   e.preventDefault();
@@ -792,7 +862,7 @@ editor.addEventListener("keydown", (e) => {
   paint(); stats();
 });
 /* コピペ・ドロップを止める */
-["paste", "drop"].forEach((t) => document.addEventListener(t, (e) => { e.preventDefault(); toast("📋 貼り付けはできません。打って覚えよう"); }));
+["paste", "drop"].forEach((t) => document.addEventListener(t, (e) => { if (e.target.closest && e.target.closest(".snip-add")) return; e.preventDefault(); toast("📋 貼り付けはできません。打って覚えよう"); }));
 editor.addEventListener("focus", () => ($("cover").style.display = "none"));
 editor.addEventListener("blur", () => { if ($("result").hidden && pos < chars.length) $("cover").style.display = ""; });
 const GHOST_NOTE = { all: "お手本が全部うすく見える", word: "いま打つ言葉だけ見える。ほかは思い出して打つ", none: "打った所だけ出る。全部思い出して打つ" };
@@ -825,6 +895,15 @@ $("next").addEventListener("click", () => { load((nextPick || pickNext(P)).i); e
 function drawSe() { $("seToggle").setAttribute("aria-pressed", String(Sound.on)); $("seToggle").textContent = Sound.on ? "🔊 効果音 オン" : "🔇 効果音 オフ"; }
 $("seToggle").addEventListener("click", () => { Sound.on = !Sound.on; try { localStorage.setItem("rct-mock:se", Sound.on ? "on" : "off"); } catch (_) {} drawSe(); editor.focus(); });
 drawSe();
+$("snipAdd").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const key = $("snipKey").value.trim(), body = $("snipBody").value;
+  if (!key || !body.trim()) { toast("呼び名と中身を入れてください"); return; }
+  if (snips.length >= can("snippets.slots")) return;
+  snips.push({ key, body }); Snips.save(snips); $("snipKey").value = ""; $("snipBody").value = "";
+  drawSnips(); toast(`✂️ 「${key}」を保存しました`);
+});
+$("snipList").addEventListener("click", (e) => { const b = e.target.closest("button[data-i]"); if (!b) return; snips.splice(+b.dataset.i, 1); Snips.save(snips); drawSnips(); });
 
 let tt; function toast(m) { const t = $("toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 1800); }
 
