@@ -63,11 +63,15 @@
     --t-kw: #66d9ef; --t-ctl: #f92672; --t-fn: #a6e22e; --t-str: #e6db74; --t-num: #ae81ff; --t-com: #75715e; --t-bi: #66d9ef; --t-op: #f8f8f2; --t-pl: #f8f8f2; }
   .editor[data-theme="rct"] { --ed-bg: #171c27; --ed-text: #e6edf7; --ed-gutter: #4a5470; --ed-gutter-act: #aab6cf; --ed-line: rgba(255,255,255,.03); --ed-cur: #ffd257;
     --t-kw: #c792ea; --t-ctl: #c792ea; --t-fn: #82aaff; --t-str: #c3e88d; --t-num: #f78c6c; --t-com: #6b7a99; --t-bi: #ffcb6b; --t-op: #89ddff; --t-pl: #e6edf7; }
-  .editor[data-theme="light"] .start-cover { background: rgba(255,255,255,.6); color: #1d2433; }
-  .editor[data-theme="light"] .start-cover span { color: #5d6880; }
+  .editor[data-theme="plain"] { --ed-bg: #ffffff; --ed-text: #111111; --ed-gutter: #9a9a9a; --ed-gutter-act: #333333; --ed-line: rgba(0,0,0,.045); --ed-cur: #111111; --ed-ghost: .45;
+    --t-kw: #111111; --t-ctl: #111111; --t-fn: #111111; --t-str: #111111; --t-num: #111111; --t-com: #111111; --t-bi: #111111; --t-op: #111111; --t-pl: #111111; }
+  .editor[data-theme="light"] .start-cover, .editor[data-theme="plain"] .start-cover { background: rgba(255,255,255,.6); color: #1d2433; }
+  .editor[data-theme="light"] .start-cover span, .editor[data-theme="plain"] .start-cover span { color: #5d6880; }
   .hidden-ghost .c:not(.done):not(.cur) { opacity: 0; }
   .ghost-word .c:not(.done):not(.cur):not(.near) { opacity: 0; }
   .opt-label { font-size: 12px; color: #9aa3b5; margin: 0 0 6px; }
+  .opt-row { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; }
+  .g-foot select, .side select { -webkit-appearance: none; appearance: none; font: inherit; font-size: 16px; line-height: 1.2; color: #dbe3f2; background: #222a3a; border: 1px solid #2f3a50; border-radius: 999px; padding: 3px 14px; cursor: pointer; }
   .opt-note { font-size: 12px; color: #7f8aa6; margin: 6px 0 0; line-height: 1.6; }
   @keyframes blink { 50% { box-shadow: inset 2px 0 0 transparent; } }
   @keyframes shake { 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
@@ -194,13 +198,16 @@
   .handoff .pill { display: inline-block; background: #fff5f5; color: #c0392b; border-radius: 999px; padding: 0 8px; margin: 0 4px 2px 0; font-size: 12px; }
   /* ===== スワイプする復習カード ===== */
   .p-swipe { position: relative; margin: 14px 16px 0; }
-  .p-card { position: relative; background: #222a3a; border-radius: 16px; padding: 16px; min-height: 250px; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; transition: transform .25s, opacity .25s; outline: none; }
+  .p-card { position: relative; background: #222a3a; border-radius: 16px; padding: 16px; min-height: 200px; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; transition: transform .25s, opacity .25s; outline: none; }
   .p-card:focus-visible { box-shadow: 0 0 0 2px var(--brand); }
   .p-card .p-code { font-size: 12px; max-height: 150px; overflow: auto; }
   .p-card .stamp { position: absolute; top: 14px; font-weight: 900; font-size: 15px; border: 3px solid; border-radius: 10px; padding: 2px 10px; opacity: 0; transition: opacity .1s; }
   .p-card .stamp.left { right: 14px; color: #ff9b9b; transform: rotate(12deg); }
   .p-card .stamp.right { left: 14px; color: var(--ok); transform: rotate(-12deg); }
   .p-card[data-dir="left"] .stamp.left, .p-card[data-dir="right"] .stamp.right { opacity: 1; }
+  .mask { color: #4a5470; }
+  .p-hint-row { padding: 8px 12px 0; }
+  .p-hint-row .p-btn { width: 100%; padding: 9px; font-size: 13px; }
   .p-swipe-help { text-align: center; font-size: 11px; color: #7f8aa6; margin: 8px 0 0; }
   button.p-rate-b { border: 0; font: inherit; font-size: 13px; font-weight: 700; border-radius: 12px; padding: 10px 4px; cursor: pointer; }
   .p-done { text-align: center; padding: 50px 10px; color: #dbe3f2; font-size: 14px; line-height: 1.9; }
@@ -244,6 +251,11 @@
   .p-line .grip { color: #4a5470; font-family: sans-serif; }
   .p-line.lift { border-color: var(--brand); box-shadow: 0 8px 18px rgba(0,0,0,.4); transform: translateX(6px) rotate(-1deg); }
   .p-line.bug { border-color: var(--ng); background: rgba(255,93,93,.1); }
+  button.p-line { display: flex; width: calc(100% - 24px); font: inherit; font-family: var(--mono); font-size: 13px; color: var(--ed-text); text-align: left; cursor: pointer; overflow-x: auto; }
+  .p-line .code { white-space: pre; }
+  .p-line.good { border-color: var(--ok); background: rgba(61,220,151,.1); }
+  .p-line.shake { animation: shake .18s; }
+  .p-foot .p-btn { padding: 12px 6px; }
   .p-out { margin: 4px 12px; font-family: var(--mono); font-size: 13px; color: #aab6cf; }
   .p-card-stack { margin: 18px 16px 0; background: #222a3a; border-radius: 16px; padding: 16px; min-height: 200px; }
   .p-mini { font-size: 12px; color: #7f8aa6; margin-bottom: 8px; }
@@ -285,9 +297,22 @@
   <div class="intro">
     <div class="what"><b>見てほしいところ</b>（5分くらい）
       <ol><li>下の黒い枠で、2問ほど打ってみる（英数入力で）。<code>print(</code> などの所で Tab を押すと、スニペットが入る</li>
-      <li>右の「色テーマ」「お手本の見せ方」と、下の効果音を切りかえてみる</li>
-      <li>「思い出す」の穴うめ・復習カード（左右にスワイプ）・SQL の組み立てを遊んでみる</li></ol></div>
+      <li>右の「色テーマ」「お手本の見せ方」と、下の音のセット・BGM 見本を切りかえてみる</li>
+      <li>「思い出す」の5つの遊びを試してみる（復習カードは左右にスワイプ、ヒントもあり）</li></ol></div>
     <a class="fb-btn" href="https://github.com/katsuan/rct-mock/issues/new?template=feedback.yml" target="_blank" rel="noopener">✏️ 感想を送る</a>
+    <details class="changes"><summary>10/24 にもらった感想を受けて直したこと</summary>
+      <ul>
+        <li>Java の問題を足した（打つ練習・穴うめ・並べかえ・どこがおかしい？・復習カード。JUnit のテストも）</li>
+        <li>「言葉だけ」を「いま打つ所だけ」に言い換えた</li>
+        <li>「練習中の言葉」を「ミスが多かった言葉」に言い換え、打ちまちがいも入ることを書いた</li>
+        <li>何問打ったら出すかを、1・2・3・5 から選べるように</li>
+        <li>色テーマに「色なし」を足した</li>
+        <li>音のセット（シンプル・ダイナミック・リラックス）と、BGM の見本を足した</li>
+        <li>スマホの②並べかえ・③どこがおかしい？も遊べるように</li>
+        <li>復習カードにヒント（コードの形 → キーワード → 関数の順に見える）を足した</li>
+        <li>スニペットの説明を「IME の辞書登録」に近い言い方にした</li>
+      </ul>
+    </details>
     <details class="changes"><summary>10/23 にもらった感想を受けて直したこと</summary>
       <ul>
         <li>ハイライトの色を VS Code の標準テーマ（Dark+）に合わせた</li>
@@ -344,14 +369,14 @@
             <div class="r-next" id="rNext"></div>
             <div class="r-actions">
               <button class="btn primary" id="again">🔁 もう一度 <span class="kbd" style="color:#fff;background:transparent;border-color:rgba(255,255,255,.5)">Enter</span></button>
-              <button class="btn" id="next">練習中の言葉で次へ →</button>
+              <button class="btn" id="next">ミスが多い言葉で次へ →</button>
             </div>
           </div>
         </div>
       </div>
       <aside class="side">
         <div><h3>💡 この問題のメモ</h3><div class="hint" id="memo"></div></div>
-        <div><h3>🌱 練習中の言葉（正しく打つと減る）</h3><div class="weak-list" id="weakList"></div></div>
+        <div><h3>🔁 ミスが多かった言葉（正しく打つと減る）</h3><div class="weak-list" id="weakList"></div></div>
         <div><h3>⚙️ 練習のしかた</h3>
           <div class="opt-label">色テーマ</div>
           <div class="chips" id="themeChips">
@@ -359,16 +384,18 @@
             <button class="chip" data-t="light" aria-pressed="false">Light+</button>
             <button class="chip" data-t="monokai" aria-pressed="false">Monokai</button>
             <button class="chip" data-t="rct" aria-pressed="false">はじめの案</button>
+            <button class="chip" data-t="plain" aria-pressed="false">色なし</button>
           </div>
           <div class="opt-note">あとで自分の好きな色にも変えられる想定（設定に保存）</div>
           <div class="opt-label" style="margin-top:12px">お手本の見せ方</div>
           <div class="chips" id="ghostChips">
             <button class="chip" data-g="all" aria-pressed="true">全部</button>
-            <button class="chip" data-g="word" aria-pressed="false">言葉だけ</button>
+            <button class="chip" data-g="word" aria-pressed="false">いま打つ所だけ</button>
             <button class="chip" data-g="none" aria-pressed="false">見せない</button>
           </div>
           <div class="opt-note" id="ghostNote"></div>
-          <label class="toggle" style="margin-top:12px"><input type="checkbox" id="adaptToggle" checked> 練習中の言葉に合わせて次を出す</label>
+          <label class="toggle" style="margin-top:12px"><input type="checkbox" id="adaptToggle" checked> ミスが多かった言葉に合わせて次を出す</label>
+          <label class="opt-label opt-row">何問打ったら出すか <select id="weakAfter" aria-label="何問打ったら出すか"><option>1</option><option>2</option><option>3</option><option>5</option></select></label>
         </div>
         <div><h3>📏 ルール</h3>
           <ul class="rules">
@@ -381,7 +408,7 @@
         </div>
       </aside>
     </div>
-    <div class="g-foot"><button class="chip" id="seToggle" aria-pressed="true">🔊 効果音 オン</button><span title="本番では入れます">🎵 BGM（モックでは省略）</span><span id="snipNow"></span><span id="footBest">🏆 自己ベスト ―</span><span id="footToday">🌱 きょう 0問</span></div>
+    <div class="g-foot"><button class="chip" id="seToggle" aria-pressed="true">🔊 効果音 オン</button><select id="soundPreset" aria-label="音のセット"><option value="simple">シンプル</option><option value="dynamic">ダイナミック</option><option value="relax">リラックス</option></select><button class="chip" id="bgmToggle" aria-pressed="false">🎵 BGM 見本 オフ</button><span id="snipNow"></span><span id="footBest">🏆 自己ベスト ―</span><span id="footToday">🌱 きょう 0問</span></div>
   </div>
   <div class="mini-rec">
     <span>🌱 <b id="mStreak">0</b> 日つづけて ・ きょう <b id="mToday">0</b> 文字</span>
@@ -390,7 +417,7 @@
   </div>
   <div class="snip-card">
     <div class="snip-head"><b>✂️ マイスニペット</b><span class="snip-count" id="snipCount"></span>
-      <span class="snip-help">よく使う形を呼び名つきで保存。次に打つ所がスニペットと同じなら <span class="kbd">Tab</span> で呼び出して入れられます（入れた分は打った文字に数えない）。</span></div>
+      <span class="snip-help">IME の辞書登録のように、よく使う形を呼び名で登録。次に打つ所がスニペットと同じなら <span class="kbd">Tab</span> で呼び出して入れられます（入れた分は打った文字に数えない）。</span></div>
     <div class="snip-list" id="snipList"></div>
     <form class="snip-add" id="snipAdd" autocomplete="off">
       <input id="snipKey" placeholder="呼び名（例: le）" maxlength="12" aria-label="呼び名">
@@ -401,23 +428,23 @@
   </div>
 
   <div class="notes">
-    <div class="note"><b>① 色がつくのが気持ちいい</b>うすいお手本に、打った所から色がのる。色は VS Code の標準テーマ（Dark+）と同じなので、仕事で見るコードの形のまま手に残ります。色テーマは設定で変えられる（Light+・Monokai など。ゆくゆくは自分の好きな色にも）。</div>
+    <div class="note"><b>① 色がつくのが気持ちいい</b>うすいお手本に、打った所から色がのる。色は VS Code の標準テーマ（Dark+）と同じなので、仕事で見るコードの形のまま手に残ります。色テーマは設定で変えられる（Light+・Monokai・色なしなど。ゆくゆくは自分の好きな色にも）。</div>
     <div class="note"><b>② コピペできない・ずるができない</b>貼り付け・ドロップを止める。ふつうの入力欄を使わず1字ずつ判定するので、補完もきかない。ランキングの公平さにもつながります。</div>
-    <div class="note"><b>③ ゲームらしさ</b>コンボ・WPM・自己ベスト・ランク（今の初段〜4級をそのまま）。まちがえた所は結果に出して「練習中の言葉」に入れ、あとでスマホで復習。</div>
-    <div class="note"><b>④ 思い出して打つ</b>お手本の見せ方は「全部」→「言葉だけ」→「見せない」の3段階。いきなり全部隠さず、少しずつ見ないで打てるようにする。Remind（思い出す）の名前どおり。</div>
-    <div class="note"><b>⑤ 音でも気持ちよく</b>打つ音・まちがえた音・クリアの音が鳴る（下の「🔊 効果音」で切りかえ）。BGM は本番で入れる（モックでは省略）。</div>
-    <div class="note"><b>⑥ スニペットで入力補助</b>よく使う形を呼び名つきで保存（5つまで）。次に打つ所と同じなら Tab で呼び出せる。呼び出した分は打った文字に数えず、ランキングにも入れない。実務のコピペに近い使い方を、ずるにならない形で入れる。</div>
+    <div class="note"><b>③ ゲームらしさ</b>コンボ・WPM・自己ベスト・ランク（今の初段〜4級をそのまま）。まちがえた所は結果に出して「ミスが多かった言葉」に入れ、あとでスマホで復習。</div>
+    <div class="note"><b>④ 思い出して打つ</b>お手本の見せ方は「全部」→「いま打つ所だけ」→「見せない」の3段階。いきなり全部隠さず、少しずつ見ないで打てるようにする。Remind（思い出す）の名前どおり。</div>
+    <div class="note"><b>⑤ 音でも気持ちよく</b>打つ音・まちがえた音・クリアの音が鳴る（下の「🔊 効果音」で切りかえ）。音のセットはシンプル・ダイナミック・リラックスから選べて、10コンボごとの音もある（ダイナミック）。BGM は見本（本物では曲を用意する）。</div>
+    <div class="note"><b>⑥ スニペットで入力補助</b>IME の辞書登録のように、よく使う形を呼び名で登録（5つまで）。次に打つ所と同じなら Tab で呼び出せる。呼び出した分は打った文字に数えず、ランキングにも入れない。コピペやショートカット（コピー・貼り付けなどの操作）の練習は、別のモードとして考えたい。</div>
   </div>
 
   <!-- ================= 苦手に合わせた出題 ================= -->
   <h2 class="sec">🎯 まちがえやすい言葉に合わせて出す</h2>
-  <p>まちがえた「字」ではなく「言葉」（<code>range</code>・<code>=&gt;</code>・<code>HAVING</code> など）ごとに、まちがえやすさを数えます（AI ではなく、出てきた回数とまちがえた回数を数えるだけ）。上の画面で2問打つと右に「練習中の言葉」が出て、「練習中の言葉で次へ」がそれを多くふくむ問題を選びます（選んだ理由も出す）。「苦手」と決めつけない言い方にして、右の切りかえで止めることもできます。</p>
+  <p>まちがえた「字」ではなく「言葉」（<code>range</code>・<code>=&gt;</code>・<code>HAVING</code> など）ごとに、まちがえやすさを数えます（AI ではなく、出てきた回数とまちがえた回数を数えるだけ）。上の画面で2問打つと右に「ミスが多かった言葉」が出て、「ミスが多い言葉で次へ」がそれを多くふくむ問題を選びます（選んだ理由も出す）。「苦手」と決めつけない言い方にして、右の切りかえで止めることもできます。</p>
   <div class="adapt">
     <div class="note"><b>① まちがえやすい言葉</b>言葉ごとに「出てきた回数」と「まちがえた回数」を数え、まちがえやすさを出す。何度も正しく打てたら、だんだん下がる（忘れる・覚えるが反映される）。</div>
-    <div class="note"><b>② 次に出す問題</b>「練習中の言葉が多く入っている」＋「しばらく打っていない（忘れかけ）」＋「まだ打っていない」を足した点数の高い順。毎回同じにならないよう、少しだけばらつかせる。</div>
+    <div class="note"><b>② 次に出す問題</b>「ミスが多かった言葉が多く入っている」＋「しばらく打っていない（忘れかけ）」＋「まだ打っていない」を足した点数の高い順。毎回同じにならないよう、少しだけばらつかせる。</div>
     <div class="note"><b>③ 指・記号のくせ</b>まちがえ方も記録する（<code>(</code> を <code>9</code>、<code>reduse</code> のような打ちまちがい）。記号ばかり外す人には、記号の多い問題を足す。</div>
-    <div class="note"><b>④ 練習中の言葉から問題を作る</b>問題が足りないときは、練習中の言葉を入れた短いコードを AI が作る。自分の学習帳の問題をもとにすれば、仕事で使うコードのまま練習できる。</div>
-    <div class="note"><b>⑤ スマホにつなぐ</b>練習中の言葉は、スマホの「穴うめ」の空欄と「どこがおかしい？」のまちがいに使う。PC で外した所を、すき間時間に思い出す。</div>
+    <div class="note"><b>④ ミスが多かった言葉から問題を作る</b>問題が足りないときは、ミスが多かった言葉を入れた短いコードを AI が作る。自分の学習帳の問題をもとにすれば、仕事で使うコードのまま練習できる。</div>
+    <div class="note"><b>⑤ スマホにつなぐ</b>ミスが多かった言葉は、スマホの「穴うめ」の空欄と「どこがおかしい？」のまちがいに使う。PC で外した所を、すき間時間に思い出す。</div>
   </div>
 
   <!-- ================= 学習記録（草） ================= -->
@@ -441,7 +468,7 @@
 
   <!-- ================= スマホ ================= -->
   <h2 class="sec">🧠 思い出す：PC でもスマホでも</h2>
-  <p>同じ問題（学習帳）を、打たずに選ぶ・並べる・答える遊びにします。スマホなら1回30秒くらい、電車の中でも。PC ではクリックとキー（← →）で同じように遊べます。①穴うめ・④復習カード・⑤SQL の組み立ては実際に遊べます（②③は見た目だけ）。</p>
+  <p>同じ問題（学習帳）を、打たずに選ぶ・並べる・答える遊びにします。スマホなら1回30秒くらい、電車の中でも。PC ではクリックとキー（← →）で同じように遊べます。①〜⑤はすべて実際に遊べます。</p>
 
   <div class="phones">
     <div class="phone-wrap">
@@ -459,44 +486,40 @@
     </div>
 
     <div class="phone-wrap">
-      <h3>② ならべかえ</h3>
-      <p>バラバラの行を、指で正しい順にならべる。字下げ（どの行がブロックの中か）も合わせる。</p>
+      <h3>② ならべかえ <span class="tag">タップで遊べます</span></h3>
+      <p>バラバラの行を正しい順にならべ、字下げ（どの行がブロックの中か）も合わせる。行をタップで選び、別の行をタップで入れかえ。</p>
       <div class="phone">
-        <div class="p-top"><span class="logo">Rct</span><span>5 / 10　⏱ 0:18</span></div>
-        <div class="p-bar"><i style="width:50%"></i></div>
-        <div class="p-q">正しい順にならべよう</div>
-        <div class="p-line"><span class="grip">⋮⋮</span><span class="t-kw">def</span> <span class="t-fn">total</span><span class="t-op">(</span>nums<span class="t-op">):</span></div>
-        <div class="p-line"><span class="grip">⋮⋮</span>    s <span class="t-op">=</span> <span class="t-num">0</span></div>
-        <div class="p-line lift"><span class="grip">⋮⋮</span>    <span class="t-ctl">for</span> n <span class="t-ctl">in</span> nums<span class="t-op">:</span></div>
-        <div class="p-line"><span class="grip">⋮⋮</span>    <span class="t-ctl">return</span> s</div>
-        <div class="p-line"><span class="grip">⋮⋮</span>        s <span class="t-op">+=</span> n</div>
-        <div class="p-foot"><div class="p-btn">← 字下げ →</div><div class="p-btn primary">これで合ってる？</div></div>
+        <div class="p-top"><span class="logo">Rct</span><span id="oTop"></span></div>
+        <div class="p-bar"><i id="oBar"></i></div>
+        <div class="p-q" id="oQ"></div>
+        <div id="oLines"></div>
+        <div class="p-out" id="oOut"></div>
+        <div class="p-foot"><button class="p-btn" id="oLeft">← 字下げ</button><button class="p-btn" id="oRight">字下げ →</button><button class="p-btn primary" id="oCheck">合ってる？</button></div>
       </div>
     </div>
 
     <div class="phone-wrap">
-      <h3>③ どこがおかしい？</h3>
-      <p>1か所だけまちがえたコード。おかしい行をタップ。PC で自分がミスした所から出すと効く。</p>
+      <h3>③ どこがおかしい？ <span class="tag">タップで遊べます</span></h3>
+      <p>1か所だけまちがえたコード。おかしい行をタップ。PC で自分がミスした言葉から出すと効く。</p>
       <div class="phone">
-        <div class="p-top"><span class="logo">Rct</span><span>7 / 10　🔥 6</span></div>
-        <div class="p-bar"><i style="width:70%"></i></div>
+        <div class="p-top"><span class="logo">Rct</span><span id="bTop"></span></div>
+        <div class="p-bar"><i id="bBar"></i></div>
         <div class="p-q">まちがっている行は？</div>
-        <div class="p-line"><span class="t-kw">const</span> sum <span class="t-op">=</span> arr</div>
-        <div class="p-line bug">  <span class="t-op">.</span><span class="t-fn">reduse</span><span class="t-op">((</span>a<span class="t-op">,</span> b<span class="t-op">)</span> <span class="t-op">=&gt;</span> a <span class="t-op">+</span> b<span class="t-op">,</span> <span class="t-num">0</span><span class="t-op">);</span></div>
-        <div class="p-line"><span class="t-bi">console</span><span class="t-op">.</span><span class="t-fn">log</span><span class="t-op">(</span>sum<span class="t-op">);</span></div>
-        <div class="p-out">✅ 正解！ reduse → <span style="color:var(--ok)">reduce</span></div>
-        <div class="p-out" style="color:#7f8aa6">あなたが PC で2回まちがえた所です</div>
-        <div class="p-foot"><div class="p-btn primary">次へ</div></div>
+        <div id="bLines"></div>
+        <div class="p-out" id="bOut"></div>
+        <div class="p-out" id="bNote" style="color:#7f8aa6"></div>
+        <div class="p-foot"><button class="p-btn primary" id="bNext" disabled>次へ</button></div>
       </div>
     </div>
 
     <div class="phone-wrap">
       <h3>④ きょうの復習カード <span class="tag">スワイプで遊べます</span></h3>
-      <p>忘れかけた問題を毎日少しだけ出す。カードをタップで答えを見て、左にスワイプで「忘れた」、右で「覚えてた」。「忘れた」問題は PC の次の問題に先に出る。</p>
+      <p>忘れかけた問題を毎日少しだけ出す。カードをタップで答えを見て、左にスワイプで「忘れた」、右で「覚えてた」。「忘れた」問題は PC の次の問題に先に出る。思い出しにくいときは「ヒント」で、コードの形 → キーワード → 関数の順に少しずつ見える。</p>
       <div class="phone">
         <div class="p-top"><span class="logo">Rct</span><span id="cTop"></span></div>
         <div class="p-swipe" id="cArea"></div>
-        <div class="p-swipe-help">← 忘れた　・　覚えてた →　（PC は ← → ↑ キー、スペースで答え）</div>
+        <div class="p-swipe-help">← 忘れた　・　覚えてた →　（PC は ← → ↑、スペースで答え、H でヒント）</div>
+        <div class="p-hint-row"><button class="p-btn" id="cHint">💡 ヒント（形 → キーワード → 関数）</button></div>
         <div class="p-rate" id="cRate">
           <button class="p-rate-b" data-r="forgot" style="background:rgba(255,93,93,.18);color:#ff9b9b">😣 忘れた</button>
           <button class="p-rate-b" data-r="maybe" style="background:rgba(255,210,87,.16);color:var(--cur)">🤔 あやしい</button>
@@ -581,24 +604,40 @@ console.log(adults.length);` },
 FROM users AS u
 LEFT JOIN orders AS o ON o.user_id = u.id
 WHERE o.total IS NULL;` },
+  { lang: "Java", memo: "拡張 for 文（for (int n : nums)）で配列を前から順に取り出す",
+    code: `public int sum(int[] nums) {
+    int total = 0;
+    for (int n : nums) {
+        total += n;
+    }
+    return total;
+}` },
+  { lang: "Java", memo: "JUnit 5 の assertEquals は（期待する値, 実際の値）の順。逆にすると失敗したときの表示が逆になる",
+    code: `@Test
+void addReturnsSum() {
+    Calculator calc = new Calculator();
+    assertEquals(5, calc.add(2, 3));
+}` },
 ];
 const KW = {
   Python: "def return for in if elif else while import from as class None True False and or not with try except pass break continue lambda yield",
   JavaScript: "const let var function return if else for of in while new class this true false null undefined await async import export",
   SQL: "SELECT FROM WHERE GROUP BY HAVING ORDER DESC ASC AS AND OR NOT JOIN LEFT INNER ON LIMIT INSERT INTO VALUES UPDATE SET DELETE COUNT SUM IS NULL",
 };
+KW.Java = "public private protected static final void int long double boolean char class new return if else for while do try catch finally throw throws import package this null true false extends implements interface";
 /* for・if・return など流れを変える言葉は紫（Dark+ と同じ分け方） */
 const CTL = {
   Python: "return for in if elif else while import from try except pass break continue yield with as raise",
   JavaScript: "return if else for of in while import export await try catch break continue",
   SQL: "",
+  Java: "return if else for while do try catch finally throw break continue import package",
 };
-const BI = { Python: "print len range list dict str int", JavaScript: "console Math JSON Array Object", SQL: "" };
+const BI = { Python: "print len range list dict str int", JavaScript: "console Math JSON Array Object", SQL: "", Java: "System String Math Arrays List assertEquals assertTrue" };
 
 /* かんたんなハイライト：1字ずつ色の種類を返す */
 function tokenize(code, lang) {
   const kw = new Set(KW[lang].split(" ")), bi = new Set(BI[lang].split(" ")), ctl = new Set(CTL[lang].split(" "));
-  const com = { Python: "#.*", JavaScript: "\\/\\/.*", SQL: "--.*" }[lang];
+  const com = { Python: "#.*", JavaScript: "\\/\\/.*", SQL: "--.*", Java: "\\/\\/.*" }[lang];
   const re = new RegExp(`(${com})|("(?:[^"\\\\]|\\\\.)*"|'(?:[^'\\\\]|\\\\.)*'|\`[^\`]*\`)|(\\b\\d+(?:\\.\\d+)?\\b)|([A-Za-z_]\\w*)|([=+\\-*/<>!&|%.,:;(){}\\[\\]]+)|(\\s|.)`, "g");
   const out = []; let m;
   while ((m = re.exec(code))) {
@@ -621,8 +660,8 @@ function tokenize(code, lang) {
 const Sound = {
   on: (() => { try { return localStorage.getItem("rct-mock:se") !== "off"; } catch (_) { return true; } })(),
   ctx: null,
-  beep(freq, dur, type, vol, when = 0) {
-    if (!this.on) return;
+  beep(freq, dur, type, vol, when = 0, force = false) {
+    if (!this.on && !force) return;
     try {
       this.ctx = this.ctx || new (window.AudioContext || window.webkitAudioContext)();
       const t = this.ctx.currentTime + when, o = this.ctx.createOscillator(), g = this.ctx.createGain();
@@ -631,10 +670,39 @@ const Sound = {
       o.connect(g).connect(this.ctx.destination); o.start(t); o.stop(t + dur);
     } catch (_) {}
   },
-  type() { this.beep(1800, 0.03, "square", 0.012); },
-  miss() { this.beep(150, 0.12, "sawtooth", 0.035); },
-  ok() { this.beep(880, 0.08, "triangle", 0.05); this.beep(1320, 0.12, "triangle", 0.05, 0.07); },
-  clear() { [523, 659, 784, 1047].forEach((f, i) => this.beep(f, 0.2, "triangle", 0.06, i * 0.09)); },
+  /* 音のセット：シンプル・ダイナミック・リラックス */
+  preset: (() => { try { return localStorage.getItem("rct-mock:sound") || "simple"; } catch (_) { return "simple"; } })(),
+  type() { const p = this.preset;
+    if (p === "relax") this.beep(1000, 0.05, "sine", 0.012);
+    else if (p === "dynamic") this.beep(2200 + Math.random() * 300, 0.025, "square", 0.016);
+    else this.beep(1800, 0.03, "square", 0.012); },
+  miss() { const p = this.preset;
+    if (p === "relax") this.beep(260, 0.18, "sine", 0.03);
+    else if (p === "dynamic") { this.beep(120, 0.15, "sawtooth", 0.045); this.beep(90, 0.15, "square", 0.02, 0.05); }
+    else this.beep(150, 0.12, "sawtooth", 0.035); },
+  ok() { const w = this.preset === "relax" ? "sine" : "triangle"; this.beep(880, 0.08, w, 0.05); this.beep(1320, 0.12, w, 0.05, 0.07); },
+  combo() { if (this.preset === "dynamic") [988, 1319].forEach((f, i) => this.beep(f, 0.08, "square", 0.03, i * 0.05)); },
+  clear() { const p = this.preset;
+    if (p === "relax") [262, 330, 392, 523].forEach((f) => this.beep(f, 1.2, "sine", 0.03));
+    else if (p === "dynamic") [523, 659, 784, 1047, 1319, 1568].forEach((f, i) => this.beep(f, 0.16, "square", 0.04, i * 0.06));
+    else [523, 659, 784, 1047].forEach((f, i) => this.beep(f, 0.2, "triangle", 0.06, i * 0.09)); },
+};
+/* BGM の見本（Web Audio で作る短いループ。本物では曲を用意する） */
+const Bgm = {
+  on: false, timer: null, step: 0,
+  SET: {
+    simple:  { bpm: 92,  wave: "triangle", vol: 0.018, notes: [262, 330, 392, 330, 294, 349, 440, 349] },
+    dynamic: { bpm: 132, wave: "square",   vol: 0.011, notes: [220, 440, 330, 440, 247, 494, 370, 494], kick: true },
+    relax:   { bpm: 64,  wave: "sine",     vol: 0.03,  notes: [196, 247, 294, 247, 175, 220, 262, 220], pad: true },
+  },
+  tick() {
+    const c = this.SET[Sound.preset], f = c.notes[this.step % c.notes.length], len = 60 / c.bpm;
+    Sound.beep(f, c.pad ? len * 1.9 : len * 0.8, c.wave, c.vol, 0, true);
+    if (c.kick && this.step % 2 === 0) Sound.beep(70, 0.12, "sine", 0.06, 0, true);
+    this.step++;
+  },
+  start() { this.stop(); this.on = true; this.tick(); this.timer = setInterval(() => this.tick(), 60000 / this.SET[Sound.preset].bpm); },
+  stop() { this.on = false; clearInterval(this.timer); this.timer = null; },
 };
 
 /* ===== ゲーム ===== */
@@ -723,19 +791,19 @@ function pickNext(curP) {
   });
   const why = best.f ? `スマホで「${best.f.r === "forgot" ? "忘れた" : "あやしい"}」にした問題だから`
     : best.hits.length
-    ? `練習中の ${best.hits.slice(0, 3).map((t) => `<code>${esc(t)}</code>`).join(" ")} が入っているから`
+    ? `ミスが多い ${best.hits.slice(0, 3).map((t) => `<code>${esc(t)}</code>`).join(" ")} が入っているから`
     : best.last ? "しばらく打っていないから" : "まだ打っていない問題だから";
   return { i: best.i, why };
 }
 function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-const WEAK_AFTER = 2; /* 何問か打つまでは出さない */
+let WEAK_AFTER = (() => { try { return +localStorage.getItem("rct-mock:weakAfter") || 2; } catch (_) { return 2; } })(); /* 何問か打つまでは出さない（変えられる） */
 function drawWeak() {
   const S = weakStats(), top = topWeak(S, 6), done = Repo.list(Auth.current().id).filter((a) => a.mode !== "card").length;
   if (done < WEAK_AFTER) { $("weakList").innerHTML = `<div class="weak-empty">あと ${WEAK_AFTER - done} 問打つと、まちがえやすい言葉がここに出ます。打ちまちがいも入るので、気にしすぎなくて大丈夫です。</div>`; return; }
   $("weakList").innerHTML = top.length
     ? top.map((t) => `<div class="weak-row"><span>${esc(t)}</span><span class="m"><i style="width:${Math.round(weakness(S, t) * 100)}%"></i></span><span>${S.tok[t].miss}</span></div>`).join("")
-      + `<button class="chip" id="weakReset" style="margin-top:6px;align-self:flex-start">記録を消す</button>`
-    : `<div class="weak-empty">いまは練習中の言葉はありません ✨</div>`;
+      + `<div class="weak-empty" style="margin-top:4px">打ちまちがいも入ります</div><button class="chip" id="weakReset" style="margin-top:6px;align-self:flex-start">記録を消す</button>`
+    : `<div class="weak-empty">いまはミスが多かった言葉はありません ✨</div>`;
   const r = $("weakReset"); if (r) r.onclick = () => { Repo.clear(); cur = { miss: {} }; refresh(); editor.focus(); };
 }
 
@@ -794,7 +862,7 @@ function drawGrass() {
   $("gRange").innerHTML = "直近1年分";
   /* 言語の割合（実際に打った分） */
   const L = {}; real.forEach((a) => (L[a.lang] = (L[a.lang] || 0) + a.chars)); const sum = Object.values(L).reduce((a, b) => a + b, 0);
-  const col = { Python: "#3f73d1", JavaScript: "#e8b923", SQL: "#3ddc97" };
+  const col = { Python: "#3f73d1", JavaScript: "#e8b923", SQL: "#3ddc97", Java: "#b07219" };
   $("gLang").outerHTML = sum
     ? `<div id="gLang"><div class="lang-split">${Object.entries(L).map(([l, c]) => `<div style="width:${(c / sum) * 100}%;background:${col[l]}"></div>`).join("")}</div>
        <div class="lang-key">${Object.entries(L).map(([l, c]) => `<span><i style="background:${col[l]}"></i>${l} ${Math.round((c / sum) * 100)}%</span>`).join("")}</div></div>`
@@ -811,10 +879,10 @@ function label(i) { const p = PROBLEMS[i]; return `${p.lang} ${PROBLEMS.slice(0,
 function drawHandoff() {
   const S = weakStats(), top = topWeak(S, 4), fgs = Object.entries(S.fg);
   $("hoToPhone").innerHTML = top.length
-    ? `練習中の言葉 ${top.map((t) => `<code>${esc(t)}</code>`).join(" ")} を、スマホの穴うめの空欄と「どこがおかしい？」に出す`
+    ? `ミスが多かった言葉 ${top.map((t) => `<code>${esc(t)}</code>`).join(" ")} を、スマホの穴うめの空欄と「どこがおかしい？」に出す`
     : "まだありません。PC で打って、まちがえた言葉がここに入ります";
   $("hoToPc").innerHTML = fgs.length
-    ? fgs.map(([i, f]) => `<span class="pill">${f.r === "forgot" ? "😣" : "🤔"} ${label(+i)}</span>`).join("") + "<br>→ PC の「練習中の言葉で次へ」で先に出る"
+    ? fgs.map(([i, f]) => `<span class="pill">${f.r === "forgot" ? "😣" : "🤔"} ${label(+i)}</span>`).join("") + "<br>→ PC の「ミスが多い言葉で次へ」で先に出る"
     : "まだありません。復習カードを左にスワイプ（忘れた）すると、ここに入ります";
 }
 function refresh() { drawWeak(); drawGrass(); drawFoot(); drawSnips(); drawHandoff(); }
@@ -922,7 +990,7 @@ editor.addEventListener("keydown", (e) => {
   if (!started) { started = Date.now(); timer = setInterval(stats, 100); }
   const c = el(pos);
   if (key === chars[pos].ch) {
-    c.classList.remove("err"); c.classList.add("done"); pos++; combo++; maxCombo = Math.max(maxCombo, combo); Sound.type();
+    c.classList.remove("err"); c.classList.add("done"); pos++; combo++; maxCombo = Math.max(maxCombo, combo); Sound.type(); if (combo % 10 === 0) Sound.combo();
     skipAuto();
     if (pos >= chars.length) { paint(); finish(); return; }
   } else {
@@ -937,7 +1005,7 @@ editor.addEventListener("keydown", (e) => {
 ["paste", "drop"].forEach((t) => document.addEventListener(t, (e) => { if (e.target.closest && e.target.closest(".snip-add")) return; e.preventDefault(); toast("📋 貼り付けはできません。打って覚えよう"); }));
 editor.addEventListener("focus", () => ($("cover").style.display = "none"));
 editor.addEventListener("blur", () => { if ($("result").hidden && pos < chars.length) $("cover").style.display = ""; });
-const GHOST_NOTE = { all: "お手本が全部うすく見える", word: "いま打つ言葉だけ見える。ほかは思い出して打つ", none: "打った所だけ出る。全部思い出して打つ" };
+const GHOST_NOTE = { all: "お手本が全部うすく見える", word: "いま打つ所（ひとかたまりの言葉）だけ見える。ほかは思い出して打つ", none: "打った所だけ出る。全部思い出して打つ" };
 function setGhost(g) {
   editor.classList.toggle("ghost-word", g === "word"); editor.classList.toggle("hidden-ghost", g === "none");
   document.querySelectorAll("#ghostChips .chip").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.g === g)));
@@ -953,13 +1021,15 @@ function setTheme(t) {
 }
 $("themeChips").addEventListener("click", (e) => { const b = e.target.closest(".chip"); if (b) { setTheme(b.dataset.t); editor.focus(); } });
 setTheme((() => { try { return localStorage.getItem("rct-mock:theme") || "dark"; } catch (_) { return "dark"; } })());
+$("weakAfter").value = String(WEAK_AFTER);
+$("weakAfter").addEventListener("change", (e) => { WEAK_AFTER = +e.target.value; try { localStorage.setItem("rct-mock:weakAfter", WEAK_AFTER); } catch (_) {} refresh(); });
 const adapt = () => $("adaptToggle").checked;
 function setNext() {
   nextPick = adapt() ? pickNext(P) : { i: (P + 1) % PROBLEMS.length, why: "順番どおり" };
-  $("next").textContent = adapt() ? "練習中の言葉で次へ →" : "次の問題へ →";
+  $("next").textContent = adapt() ? "ミスが多い言葉で次へ →" : "次の問題へ →";
   $("rNext").innerHTML = adapt() ? `🎯 次は <b>${PROBLEMS[nextPick.i].lang}</b>：${nextPick.why}` : `▶ 次は <b>${PROBLEMS[nextPick.i].lang}</b>（順番どおり）`;
 }
-$("adaptToggle").addEventListener("change", () => { if (!$("result").hidden) setNext(); else $("next").textContent = adapt() ? "練習中の言葉で次へ →" : "次の問題へ →"; });
+$("adaptToggle").addEventListener("change", () => { if (!$("result").hidden) setNext(); else $("next").textContent = adapt() ? "ミスが多い言葉で次へ →" : "次の問題へ →"; });
 $("again").addEventListener("click", () => { reset(); editor.focus(); });
 let nextPick = null;
 $("next").addEventListener("click", () => { load((nextPick || pickNext(P)).i); editor.focus(); });
@@ -967,6 +1037,11 @@ $("next").addEventListener("click", () => { load((nextPick || pickNext(P)).i); e
 function drawSe() { $("seToggle").setAttribute("aria-pressed", String(Sound.on)); $("seToggle").textContent = Sound.on ? "🔊 効果音 オン" : "🔇 効果音 オフ"; }
 $("seToggle").addEventListener("click", () => { Sound.on = !Sound.on; try { localStorage.setItem("rct-mock:se", Sound.on ? "on" : "off"); } catch (_) {} drawSe(); editor.focus(); });
 drawSe();
+$("soundPreset").value = Sound.preset;
+$("soundPreset").addEventListener("change", (e) => { Sound.preset = e.target.value; try { localStorage.setItem("rct-mock:sound", Sound.preset); } catch (_) {} Sound.ok(); if (Bgm.on) Bgm.start(); });
+function drawBgm() { $("bgmToggle").setAttribute("aria-pressed", String(Bgm.on)); $("bgmToggle").textContent = Bgm.on ? "🎵 BGM 見本 オン" : "🎵 BGM 見本 オフ"; }
+$("bgmToggle").addEventListener("click", () => { if (Bgm.on) Bgm.stop(); else Bgm.start(); drawBgm(); });
+drawBgm();
 $("snipAdd").addEventListener("submit", (e) => {
   e.preventDefault();
   const key = $("snipKey").value.trim(), body = $("snipBody").value;
@@ -985,6 +1060,7 @@ const FILL = [
   { lang: "Python", code: "for i in ___(10):\n    print(i * 2)", choices: ["len", "range", "list", "enumerate"], answer: "range", hint: "0〜9 の数を順に作る関数" },
   { lang: "JavaScript", code: "const total = prices\n  .___((sum, p) => sum + p, 0);", choices: ["map", "filter", "reduce", "forEach"], answer: "reduce", hint: "配列を1つの値（合計）にまとめる" },
   { lang: "SQL", code: "SELECT dept, COUNT(*)\nFROM users\nGROUP BY dept\n___ COUNT(*) > 3;", choices: ["WHERE", "HAVING", "ORDER BY", "LIMIT"], answer: "HAVING", hint: "GROUP BY でまとめたあとの条件" },
+  { lang: "Java", code: "@Test\nvoid addReturnsSum() {\n    assert___(5, calc.add(2, 3));\n}", choices: ["Equals", "True", "Null", "Same"], answer: "Equals", hint: "期待する値と実際の値が同じかを確かめる" },
 ];
 function hl(code, lang) { const cls = tokenize(code, lang); return [...code].map((ch, i) => `<span class="${cls[i]}">${esc(ch)}</span>`).join(""); }
 const F = { i: 0, streak: 0, done: false };
@@ -1017,9 +1093,11 @@ const CARDS = [
   { p: 0, q: "リストの数を全部2倍にして返す関数" },
   { p: 1, q: "値段の合計を出し、400 を超えたら表示する" },
   { p: 5, q: "注文が1件もない人を出す" },
+  { p: 6, q: "int の配列の合計を返すメソッド（拡張 for 文で）" },
+  { p: 7, q: "2 + 3 が 5 になることを確かめる JUnit のテスト" },
 ];
 const NEXT_DAY = { forgot: "すぐ（PC の次の問題にも）", maybe: "あした", ok: "4日後" };
-const C = { i: 0, open: false };
+const C = { i: 0, open: false, hint: 0 };
 function cardHTML() {
   if (C.i >= CARDS.length) return `<div class="p-card p-done" id="cCard">🎉 きょうの分はおわり！<br><button class="p-btn primary" id="cAgain" style="margin-top:14px;padding:10px 18px">もう一度</button></div>`;
   const c = CARDS[C.i], pr = PROBLEMS[c.p];
@@ -1027,15 +1105,21 @@ function cardHTML() {
     <div class="stamp left">忘れた</div><div class="stamp right">覚えてた</div>
     <div class="p-mini">${esc(label(c.p))}</div>
     <div style="font-size:14px;margin-bottom:10px;color:#dbe3f2">${esc(c.q)}</div>
-    <div class="p-code" style="margin:0" ${C.open ? "" : "hidden"}>${hl(pr.code, pr.lang)}</div>
-    <div class="p-mini" style="margin-top:10px">${C.open ? "← 忘れた ・ 覚えてた →" : "👆 タップで答えを見る"}</div></div>`;
+    <div class="p-code" style="margin:0" ${C.open || C.hint ? "" : "hidden"}>${C.open ? hl(pr.code, pr.lang) : C.hint ? masked(pr.code, pr.lang, C.hint) : ""}</div>
+    <div class="p-mini" style="margin-top:10px">${C.open ? "← 忘れた ・ 覚えてた →" : C.hint ? `💡 ヒント ${C.hint} / 3 ・ 👆 タップで答え` : "👆 タップで答えを見る"}</div></div>`;
+}
+/* ヒント：コードの形 → キーワード → 関数・数の順に、少しずつ見せる */
+const HINT_SHOW = [null, ["t-op"], ["t-op", "t-kw", "t-ctl"], ["t-op", "t-kw", "t-ctl", "t-fn", "t-bi", "t-num"]];
+function masked(code, lang, lv) {
+  const cls = tokenize(code, lang), show = HINT_SHOW[lv];
+  return [...code].map((ch, i) => /\s/.test(ch) || show.includes(cls[i]) ? `<span class="${cls[i]}">${esc(ch)}</span>` : `<span class="mask">·</span>`).join("");
 }
 function cardDraw() {
   $("cArea").innerHTML = cardHTML();
   $("cTop").textContent = C.i < CARDS.length ? `きょう あと ${CARDS.length - C.i}枚` : "きょう 0枚";
   $("cRate").style.visibility = C.i < CARDS.length ? "" : "hidden";
   const card = $("cCard"), again = $("cAgain");
-  if (again) { again.onclick = () => { C.i = 0; C.open = false; $("cOut").textContent = ""; cardDraw(); }; return; }
+  if (again) { again.onclick = () => { C.i = 0; C.open = false; C.hint = 0; $("cOut").textContent = ""; cardDraw(); }; return; }
   let d = null;
   card.addEventListener("pointerdown", (e) => { d = { x: e.clientX, y: e.clientY, moved: false }; card.setPointerCapture(e.pointerId); card.style.transition = "none"; });
   card.addEventListener("pointermove", (e) => {
@@ -1054,6 +1138,7 @@ function cardDraw() {
     if (e.key === "ArrowLeft") { e.preventDefault(); cardAnswer("forgot"); }
     else if (e.key === "ArrowRight") { e.preventDefault(); cardAnswer("ok"); }
     else if (e.key === "ArrowUp") { e.preventDefault(); cardAnswer("maybe"); }
+    else if (e.key === "h" || e.key === "H") { e.preventDefault(); cardHint(); }
     else if (e.key === " " || e.key === "Enter") { e.preventDefault(); C.open = !C.open; cardDraw(); $("cCard").focus(); }
   });
 }
@@ -1067,8 +1152,10 @@ function cardAnswer(r) {
   const x = r === "ok" ? 420 : r === "forgot" ? -420 : 0, y = r === "maybe" ? -320 : 0;
   card.style.transform = `translate(${x}px, ${y}px) rotate(${x / 20}deg)`; card.style.opacity = "0";
   refresh();
-  setTimeout(() => { C.i++; C.open = false; cardDraw(); const n = $("cCard"); if (n && n.tabIndex === 0) n.focus({ preventScroll: true }); }, 230);
+  setTimeout(() => { C.i++; C.open = false; C.hint = 0; cardDraw(); const n = $("cCard"); if (n && n.tabIndex === 0) n.focus({ preventScroll: true }); }, 230);
 }
+function cardHint() { if (C.i >= CARDS.length || C.open) return; C.hint = Math.min(3, C.hint + 1); cardDraw(); $("cCard").focus({ preventScroll: true }); }
+$("cHint").addEventListener("click", cardHint);
 $("cRate").addEventListener("click", (e) => { const b = e.target.closest("[data-r]"); if (b) cardAnswer(b.dataset.r); });
 
 /* ===== 思い出す：SQL の組み立て ===== */
@@ -1115,7 +1202,74 @@ $("sqCheck").addEventListener("click", () => {
   sqDraw(marks);
 });
 
-buildChips(); load(0); refresh(); fillLoad(); cardDraw(); sqLoad();
+/* ===== 思い出す：ならべかえ ===== */
+const ORDQ = [
+  { lang: "Python", q: "合計を返す関数にならべよう", lines: [["def total(nums):", 0], ["s = 0", 1], ["for n in nums:", 1], ["s += n", 2], ["return s", 1]] },
+  { lang: "Java", q: "合計を返すメソッドにならべよう", lines: [["int sum(int[] nums) {", 0], ["int s = 0;", 1], ["for (int n : nums) {", 1], ["s += n;", 2], ["}", 1], ["return s;", 1], ["}", 0]] },
+];
+const O = { i: 0, order: [], ind: [], sel: null, done: false };
+function ordLoad() {
+  const q = ORDQ[O.i]; O.done = false; O.sel = null;
+  do { O.order = q.lines.map((_, k) => k).sort(() => Math.random() - 0.5); } while (O.order.every((v, k) => q.lines[v][0] === q.lines[k][0]));
+  O.ind = q.lines.map(() => 0);
+  $("oQ").textContent = q.q; $("oOut").textContent = "行をタップで選び、別の行をタップで入れかえ"; $("oCheck").textContent = "合ってる？";
+  ordDraw();
+}
+function ordDraw(marks) {
+  const q = ORDQ[O.i];
+  $("oTop").textContent = `${O.i + 1} / ${ORDQ.length}`; $("oBar").style.width = ((O.i + (O.done ? 1 : 0)) / ORDQ.length) * 100 + "%";
+  $("oLines").innerHTML = O.order.map((li, k) => `<button class="p-line${O.sel === k ? " lift" : ""}${marks ? (marks[k] ? " good" : " bug") : ""}" data-k="${k}"><span class="grip">⋮⋮</span><span class="code">${"    ".repeat(O.ind[li])}${hl(q.lines[li][0], q.lang)}</span></button>`).join("");
+}
+$("oLines").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-k]"); if (!b || O.done) return; const k = +b.dataset.k;
+  if (O.sel === null) O.sel = k;
+  else if (O.sel === k) O.sel = null;
+  else { [O.order[O.sel], O.order[k]] = [O.order[k], O.order[O.sel]]; O.sel = k; Sound.type(); }
+  ordDraw();
+});
+function ordIndent(d) {
+  if (O.done) return; if (O.sel === null) { $("oOut").textContent = "先に行をタップして選んでください"; return; }
+  const li = O.order[O.sel]; O.ind[li] = Math.max(0, Math.min(3, O.ind[li] + d)); ordDraw();
+}
+$("oLeft").addEventListener("click", () => ordIndent(-1));
+$("oRight").addEventListener("click", () => ordIndent(1));
+$("oCheck").addEventListener("click", () => {
+  if (O.done) { O.i = (O.i + 1) % ORDQ.length; ordLoad(); return; }
+  const q = ORDQ[O.i], marks = O.order.map((li, k) => q.lines[li][0] === q.lines[k][0] && O.ind[li] === q.lines[k][1]);
+  O.sel = null;
+  if (marks.every(Boolean)) { O.done = true; Sound.ok(); $("oOut").textContent = "✅ 正解！"; $("oCheck").textContent = O.i === ORDQ.length - 1 ? "もう一度" : "次へ"; }
+  else { Sound.miss(); $("oOut").textContent = "赤い行は、順番か字下げがちがいます"; }
+  ordDraw(marks);
+});
+
+/* ===== 思い出す：どこがおかしい？ ===== */
+const BUGQ = [
+  { lang: "JavaScript", lines: ["const sum = arr", "  .reduse((a, b) => a + b, 0);", "console.log(sum);"], bug: 1, wrong: "reduse", fix: "reduce" },
+  { lang: "Python", lines: ["def greet(name):", "    retrun f\"hi {name}\"", "print(greet(\"yu\"))"], bug: 1, wrong: "retrun", fix: "return" },
+  { lang: "SQL", lines: ["SELECT name", "FORM users", "WHERE age > 20;"], bug: 1, wrong: "FORM", fix: "FROM" },
+  { lang: "Java", lines: ["int total = 0;", "total += 5;", "System.out.printn(total);"], bug: 2, wrong: "printn", fix: "println" },
+];
+const B = { i: 0, done: false };
+function bugLoad() {
+  const q = BUGQ[B.i]; B.done = false;
+  $("bTop").textContent = `${B.i + 1} / ${BUGQ.length}`; $("bBar").style.width = (B.i / BUGQ.length) * 100 + "%";
+  $("bLines").innerHTML = q.lines.map((t, k) => `<button class="p-line" data-k="${k}"><span class="code">${hl(t, q.lang)}</span></button>`).join("");
+  $("bOut").textContent = ""; $("bNote").textContent = ""; $("bNext").disabled = true; $("bNext").textContent = "次へ";
+}
+$("bLines").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-k]"); if (!b || B.done) return; const q = BUGQ[B.i];
+  if (+b.dataset.k === q.bug) {
+    B.done = true; b.classList.add("bug"); Sound.ok();
+    $("bOut").innerHTML = `✅ 正解！ ${esc(q.wrong)} → <span style="color:var(--ok)">${esc(q.fix)}</span>`;
+    const t = weakStats().tok[q.fix];
+    $("bNote").textContent = t && t.miss ? `あなたが PC で ${t.miss}回まちがえた言葉です` : "PC でまちがえた言葉は、ここに出やすくなります";
+    $("bBar").style.width = ((B.i + 1) / BUGQ.length) * 100 + "%"; $("bNext").disabled = false;
+    if (B.i === BUGQ.length - 1) $("bNext").textContent = "もう一度";
+  } else { Sound.miss(); b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); $("bOut").textContent = "そこは合っています"; }
+});
+$("bNext").addEventListener("click", () => { B.i = (B.i + 1) % BUGQ.length; bugLoad(); });
+
+buildChips(); load(0); refresh(); fillLoad(); cardDraw(); sqLoad(); ordLoad(); bugLoad();
 </script>
 </body>
 </html>
