@@ -253,6 +253,9 @@
   .p-line.bug { border-color: var(--ng); background: rgba(255,93,93,.1); }
   button.p-line { display: flex; width: calc(100% - 24px); font: inherit; font-family: var(--mono); font-size: 13px; color: var(--ed-text); text-align: left; cursor: pointer; overflow-x: auto; }
   .p-line .code { white-space: pre; }
+  #oLines .p-line { touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+  #oLines .grip { touch-action: none; cursor: grab; font-size: 16px; padding: 6px 8px; margin: -6px 0 -6px -8px; }
+  #oLines .p-line.lift { position: relative; z-index: 2; }
   .p-line.good { border-color: var(--ok); background: rgba(61,220,151,.1); }
   .p-line.shake { animation: shake .18s; }
   .p-foot .p-btn { padding: 12px 6px; }
@@ -308,7 +311,7 @@
         <li>何問打ったら出すかを、1・2・3・5 から選べるように</li>
         <li>色テーマに「色なし」を足した</li>
         <li>音のセット（シンプル・ダイナミック・リラックス）と、BGM の見本を足した</li>
-        <li>スマホの②並べかえ・③どこがおかしい？も遊べるように</li>
+        <li>スマホの②並べかえ・③どこがおかしい？も遊べるように（並べかえは ⋮⋮ をつかんで上下に動かし、左右スワイプで字下げ）</li>
         <li>復習カードにヒント（コードの形 → キーワード → 関数の順に見える）を足した</li>
         <li>スニペットの説明を「IME の辞書登録」に近い言い方にした</li>
       </ul>
@@ -487,7 +490,7 @@
 
     <div class="phone-wrap">
       <h3>② ならべかえ <span class="tag">タップで遊べます</span></h3>
-      <p>バラバラの行を正しい順にならべ、字下げ（どの行がブロックの中か）も合わせる。行をタップで選び、別の行をタップで入れかえ。</p>
+      <p>バラバラの行を正しい順にならべ、字下げ（どの行がブロックの中か）も合わせる。⋮⋮ をつかんで上下に動かし、行を左右にスワイプで字下げ（ボタンでも変えられる）。</p>
       <div class="phone">
         <div class="p-top"><span class="logo">Rct</span><span id="oTop"></span></div>
         <div class="p-bar"><i id="oBar"></i></div>
@@ -1212,7 +1215,7 @@ function ordLoad() {
   const q = ORDQ[O.i]; O.done = false; O.sel = null;
   do { O.order = q.lines.map((_, k) => k).sort(() => Math.random() - 0.5); } while (O.order.every((v, k) => q.lines[v][0] === q.lines[k][0]));
   O.ind = q.lines.map(() => 0);
-  $("oQ").textContent = q.q; $("oOut").textContent = "行をタップで選び、別の行をタップで入れかえ"; $("oCheck").textContent = "合ってる？";
+  $("oQ").textContent = q.q; $("oOut").textContent = "⋮⋮ をつかんで上下に動かす。行を左右にスワイプで字下げ"; $("oCheck").textContent = "合ってる？";
   ordDraw();
 }
 function ordDraw(marks) {
@@ -1220,13 +1223,42 @@ function ordDraw(marks) {
   $("oTop").textContent = `${O.i + 1} / ${ORDQ.length}`; $("oBar").style.width = ((O.i + (O.done ? 1 : 0)) / ORDQ.length) * 100 + "%";
   $("oLines").innerHTML = O.order.map((li, k) => `<button class="p-line${O.sel === k ? " lift" : ""}${marks ? (marks[k] ? " good" : " bug") : ""}" data-k="${k}"><span class="grip">⋮⋮</span><span class="code">${"    ".repeat(O.ind[li])}${hl(q.lines[li][0], q.lang)}</span></button>`).join("");
 }
-$("oLines").addEventListener("click", (e) => {
-  const b = e.target.closest("[data-k]"); if (!b || O.done) return; const k = +b.dataset.k;
-  if (O.sel === null) O.sel = k;
-  else if (O.sel === k) O.sel = null;
-  else { [O.order[O.sel], O.order[k]] = [O.order[k], O.order[O.sel]]; O.sel = k; Sound.type(); }
-  ordDraw();
+/* ⋮⋮ をつかんで上下にドラッグで並べかえ。行を左右にスワイプで字下げ。タップは選ぶだけ（字下げボタン用） */
+let OD = null;
+$("oLines").addEventListener("pointerdown", (e) => {
+  const line = e.target.closest("[data-k]"); if (!line || O.done) return;
+  const grip = !!e.target.closest(".grip");
+  OD = { k: +line.dataset.k, y0: e.clientY, x0: e.clientX, grip, moved: false };
+  if (grip) { e.preventDefault(); O.sel = OD.k; ordDraw(); }
 });
+function odLine() { return $("oLines").querySelector(`[data-k="${OD.k}"]`); }
+window.addEventListener("pointermove", (e) => {
+  if (!OD) return;
+  const dx = e.clientX - OD.x0, dy = e.clientY - OD.y0;
+  if (Math.abs(dx) > 6 || Math.abs(dy) > 6) OD.moved = true;
+  const line = odLine(); if (!line) return;
+  if (OD.grip) {
+    e.preventDefault();
+    const h = line.offsetHeight + 6, to = Math.max(0, Math.min(O.order.length - 1, OD.k + Math.round(dy / h)));
+    if (to !== OD.k) {
+      const [v] = O.order.splice(OD.k, 1); O.order.splice(to, 0, v);
+      OD.y0 += (to - OD.k) * h; OD.k = to; O.sel = to; ordDraw(); Sound.type();
+    }
+    const cur = odLine(); cur.style.transition = "none"; cur.style.transform = `translateY(${e.clientY - OD.y0}px) scale(1.02)`;
+  } else if (Math.abs(dx) > Math.abs(dy)) {
+    line.style.transition = "none"; line.style.transform = `translateX(${Math.max(-40, Math.min(40, dx * 0.5))}px)`;
+  }
+});
+const odEnd = (e) => {
+  if (!OD) return;
+  const dx = e.clientX - OD.x0, dy = e.clientY - OD.y0, k = OD.k, grip = OD.grip, moved = OD.moved; OD = null;
+  if (grip) { ordDraw(); return; }
+  if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+    const li = O.order[k]; O.ind[li] = Math.max(0, Math.min(3, O.ind[li] + (dx > 0 ? 1 : -1))); O.sel = k; Sound.type(); ordDraw();
+  } else if (!moved) { O.sel = O.sel === k ? null : k; ordDraw(); }
+  else ordDraw();
+};
+window.addEventListener("pointerup", odEnd); window.addEventListener("pointercancel", odEnd);
 function ordIndent(d) {
   if (O.done) return; if (O.sel === null) { $("oOut").textContent = "先に行をタップして選んでください"; return; }
   const li = O.order[O.sel]; O.ind[li] = Math.max(0, Math.min(3, O.ind[li] + d)); ordDraw();
