@@ -6,12 +6,12 @@ GitHub の草（日ごとの contribution）と最新の行動3件を、iPhone �
 
 1. App Store で Scriptable を入れる
 2. このフォルダの [`SQriptableGitHub.js`](SQriptableGitHub.js) を開き、右上の「Raw」→ 全部コピー
-3. Scriptable で右上の「＋」→ 貼りつけて、名前を `SQriptableGitHub` にする
+3. Scriptable で右上の「＋」→ 貼りつける（名前は好きなものでよい）
 4. GitHub の Settings → Developer settings → Personal access tokens でトークンを作る
    - fine-grained でよい。公開リポジトリだけなら権限はなしでよい
    - 非公開リポジトリの行動やコミットのメッセージも出すなら、そのリポジトリの「Contents: Read-only」を許す
 5. Scriptable でスクリプトを開いて「🔑 トークンを入れる」。トークンはその iPhone の Keychain にだけしまわれ、ファイルには書かれません
-6. ホーム画面かロック画面に Scriptable のウィジェットを置き、Script に `SQriptableGitHub` を選ぶ（Parameter は空でよい）
+6. ホーム画面かロック画面に Scriptable のウィジェットを置き、Script に 3. で付けた名前のスクリプトを選ぶ（Parameter は空でよい）
 
 アプリで開くと、大きさ（小・中・大・ロック画面）を選んで見た目を試せます。
 
