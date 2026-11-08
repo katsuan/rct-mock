@@ -3,7 +3,7 @@
 // ======================================
 //
 // GitHub の草（日ごとの contribution）と、最新の行動3件を、iPhone から GitHub の API で直接読んで見せるウィジェット。
-// SQriptable 本体とは別のスクリプト。見た目（色・字・右上の時刻）は SQriptableSwitchBot・SQriptableOURA とそろえてある。
+// 1ファイルで動く（ほかのスクリプトはいらない）。見た目（色・字・右上の時刻）は同じシリーズのほかのウィジェットとそろえてある。
 //
 // 使い方
 //   1. GitHub の Settings → Developer settings → Personal access tokens でトークンを作る
@@ -38,7 +38,7 @@ const GRASS = {
 };
 const LEVELS = ["NONE", "FIRST_QUARTILE", "SECOND_QUARTILE", "THIRD_QUARTILE", "FOURTH_QUARTILE"];
 
-// ---------- 色・字（SQriptableSwitchBot・SQriptableOURA と同じ部品） ----------
+// ---------- 色・字（同じシリーズのほかのウィジェットと同じ部品） ----------
 const COLORS = { light: "#D1D5DB", white: "#FFFFFF" };
 const THEME = {
   light: { bg: "#F4F2FB", text: "#1B1730", sub: "#6B6585", line: "#1B1730" },
@@ -49,7 +49,7 @@ function themeColor_(key, alpha = 1) {
   return Color.dynamic(new Color(THEME.light[key], alpha), new Color(THEME.dark[key], alpha));
 }
 
-// いま描いている大きさ。アプリの「試す」では config.widgetFamily が空なので、ここで覚える
+// いま描いている大きさ。アプリで開いて「○で見る」を選んだときは config.widgetFamily が空なので、ここで覚える
 let currentFamily = null;
 
 function widgetFamily_(fallback = "medium") {
@@ -105,7 +105,7 @@ function widgetSize_(family) {
 }
 
 // ======================================
-// 大きさ（Apple の HIG の表から。LifeOS のウィジェットと同じ）
+// 大きさ（Apple の HIG の表から）
 // ======================================
 const IPHONE_WIDGET_SIZES = [
   [430, 932, 170, 364, 382, 76, 172, 76],
@@ -168,7 +168,7 @@ function widgetSizeFor(family, screen, pad) {
     small: { w: s, h: s },
     medium: { w: m, h: s },
     large: { w: m, h: l },
-    // iPhone に特大はない（試験台で描くときのため）
+    // iPhone に特大はない（iPad や、パソコンで見た目を確かめるとき用）
     extraLarge: { w: m * 2 + 20, h: l },
     accessoryCircular: { w: circle, h: circle },
     accessoryRectangular: { w: rectW, h: rectH },
@@ -300,7 +300,7 @@ function calendarDays_(json) {
 
 /**
  * 続いた日数。きょうに1つ以上あればきょうから、まだなければきのうから数える
- * （きょうまだでも、きのうまで続いていれば日数は消えない。つづくと同じ数え方）
+ * （きょうまだでも、きのうまで続いていれば日数は消えない）
  */
 function streakOf_(days, today) {
   const byDate = new Map(days.map((d) => [d.date, d.count]));
@@ -316,7 +316,7 @@ function streakOf_(days, today) {
   return streak;
 }
 
-/** リポジトリの名前。自分のリポジトリなら持ち主を省く（katsuan/q-sqriptable → q-sqriptable） */
+/** リポジトリの名前。自分のリポジトリなら持ち主を省く（octo/my-app → my-app） */
 function repoName_(full, login) {
   const name = String(full || "");
   return login && name.toLowerCase().startsWith(`${login.toLowerCase()}/`) ? name.slice(login.length + 1) : name;
