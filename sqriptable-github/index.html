@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQriptable GitHub</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eef2f9; --card: #fff; --text: #1d2433; --sub: #5d6880; --line: #d9e1ef;
+    --accent: #4f7fd6; --on-accent: #fff; --code-bg: #f1f4fa;
+    --mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #12151c; --card: #1b2029; --text: #e8ecf4; --sub: #9aa5bb; --line: #2c3442; --accent: #87aae6; --on-accent: #12151c; --code-bg: #232a36; }
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Noto Sans JP", system-ui, sans-serif; line-height: 1.8; -webkit-text-size-adjust: 100%; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 32px 16px 80px; }
+  h1 { font-size: 24px; margin: 0 0 8px; }
+  .lead { color: var(--sub); margin: 0 0 24px; font-size: 15px; }
+  h2 { font-size: 18px; margin: 40px 0 8px; }
+  p { margin: 0 0 8px; }
+  .sub { color: var(--sub); font-size: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+  .shots { display: grid; gap: 16px; }
+  .shots figure { margin: 0; }
+  .shots img { display: block; width: 100%; height: auto; border-radius: 16px; }
+  .shots figcaption { color: var(--sub); font-size: 13px; margin-top: 8px; }
+  .steps { margin: 0; padding-left: 24px; display: grid; gap: 16px; font-size: 15px; }
+  .steps li::marker { color: var(--sub); font-weight: 700; }
+  .steps ul { margin: 8px 0 0; padding-left: 16px; color: var(--sub); font-size: 14px; display: grid; gap: 4px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0 0; }
+  button, .btn { font: inherit; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: var(--on-accent); cursor: pointer; text-decoration: none; }
+  .btn.ghost { background: transparent; color: var(--accent); }
+  button svg, .btn svg { width: 16px; height: 16px; flex: none; }
+  code { font-family: var(--mono); font-size: 13px; background: var(--code-bg); border-radius: 4px; padding: 0 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px; border-bottom: 1px solid var(--line); }
+  th { color: var(--sub); font-weight: 700; white-space: nowrap; width: 1%; }
+  a { color: var(--accent); }
+  .note { color: var(--sub); font-size: 13px; margin-top: 16px; }
+
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1 data-name="tool"></h1>
+  <p class="lead" id="lead"></p>
+
+  <section class="shots" aria-label="見た目">
+    <figure><picture><source srcset="images/home-dark.png" media="(prefers-color-scheme: dark)"><img src="images/home-light.png" alt="ホーム画面のウィジェット（小・中・大）" width="1084" height="1116" style="max-width:540px"></picture><figcaption>ホーム画面（小・中・大）。iPhone のダークモードに合わせて色が変わります</figcaption></figure>
+    <figure><img src="images/lock.png" alt="ロック画面のウィジェット（1行・丸・長方形）" width="556" height="276" loading="lazy" style="max-width:360px"><figcaption>ロック画面（1行・丸・長方形）。画像はどれも見本のデータです</figcaption></figure>
+  </section>
+
+  <h2>入れ方</h2>
+  <ol class="steps" id="steps"></ol>
+
+  <h2>大きさごとに出るもの</h2>
+  <div class="card">
+    <table>
+      <tr><th>小</th><td>きょうの数と続いた日数、ここ13週の草</td></tr>
+      <tr><th>中</th><td>44週ほどの草と、最新の行動3件（何をした・リポジトリ・時刻）</td></tr>
+      <tr><th>大</th><td>月の名前つきの草、きょう・続いた日数・この1年、最新の行動3件</td></tr>
+      <tr><th>ロック画面</th><td>1行は「きょうの数・続いた日数」、丸はきょうの数、長方形は短い草</td></tr>
+    </table>
+  </div>
+  <p class="note">続いた日数は、きょうまだでも、きのうまで続いていれば消えません。ウィジェットは iOS の都合で15分〜1時間ごとに描き直されます。</p>
+
+  <h2>新しい版にするとき</h2>
+  <p id="update"></p>
+
+  <p class="note">感想・不具合は <a href="https://github.com/katsuan/rct-mock/issues/new">Issue</a> へどうぞ。</p>
+</main>
+
+<script>
+// 画面に出す名前は、ここにだけ書く
+const NAMES = {
+  tool: "SQriptable GitHub",
+  scriptable: "Scriptable",
+  github: "GitHub",
+  widgetScript: "GitHub",
+};
+const SCRIPT_FILE = "SQriptableGitHub.js";
+const TOKEN_URL = "https://github.com/settings/personal-access-tokens/new";
+const ICON = {
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
+  file: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>',
+  out: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>',
+};
+
+const S = NAMES.scriptable, G = NAMES.github, W = NAMES.widgetScript;
+document.title = NAMES.tool;
+document.querySelectorAll("[data-name]").forEach((el) => { el.textContent = NAMES[el.dataset.name]; });
+document.getElementById("lead").textContent = `${G} の草（日ごとの contribution）と最新の行動を、iPhone のホーム画面・ロック画面に出すウィジェットです。${S}（無料のアプリ）にスクリプトを入れて使います。`;
+document.getElementById("steps").innerHTML = `
+  <li>App Store で「${S}」を入れる（無料）。</li>
+  <li>下のボタンでスクリプトをコピーする。
+    <div class="row"><button type="button" id="copy-script">${ICON.copy}スクリプトをコピー</button><a class="btn ghost" href="${SCRIPT_FILE}">${ICON.file}ファイルを開く</a></div></li>
+  <li>${S} を開き、右上の「＋」を押す。白い画面を長押しして「ペースト」。</li>
+  <li>上の名前（Untitled Script）を押して、好きな名前（たとえば「${W}」）に変え、左上の「Done」で閉じる。</li>
+  <li>${G} でトークンを作る。
+    <div class="row"><a class="btn ghost" href="${TOKEN_URL}" target="_blank" rel="noopener">${ICON.out}トークンを作る画面を開く</a></div>
+    <ul>
+      <li>「Fine-grained token」でよい。名前と期限を決めて「Generate token」</li>
+      <li>公開リポジトリだけなら、権限は何も足さなくてよい</li>
+      <li>非公開リポジトリの行動やコミットのメッセージも出すなら、「Repository access」でそのリポジトリを選び、「Contents」を Read-only にする</li>
+      <li>できたトークンをコピーしておく（その画面でしか見られない）</li>
+    </ul></li>
+  <li>${S} の一覧で、4. で付けた名前のスクリプトを押す。「トークンを入れる」を選んで貼りつける。
+    <ul>
+      <li>トークンはその iPhone の Keychain にだけしまわれ、ファイルには書かれません</li>
+      <li>あとは大きさ（小・中・大・ロック画面）を選ぶと、その場で見た目を試せます</li>
+    </ul></li>
+  <li>ホーム画面のあいている所を長押し → 左上の「編集」→「ウィジェットを追加」→「${S}」→ 大きさを選ぶ →「ウィジェットを追加」。</li>
+  <li>置いたウィジェットを長押し →「ウィジェットを編集」→ Script で 4. の名前のスクリプトを選ぶ。Parameter は空のままでよい。</li>
+  <li>ロック画面に置くときは、ロック画面を長押し →「カスタマイズ」→ ウィジェットの欄で「${S}」を足し、同じように Script を選ぶ。</li>`;
+document.getElementById("update").textContent = `上のボタンでもう一度コピーし、${S} でそのスクリプトを開いて、中身を全部選んでからペーストし、「Done」で閉じてください。トークンは Keychain に残るので、入れなおさなくて大丈夫です。`;
+
+// iPhone の Safari は、押したあとに読みこむと写せないので、読みこみごと渡す
+let scriptText = null;
+const loadScript = () => scriptText ? Promise.resolve(scriptText) : fetch(SCRIPT_FILE).then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); }).then((t) => (scriptText = t));
+async function copyText(get, btn) {
+  const label = btn.innerHTML;
+  try {
+    if (window.ClipboardItem && navigator.clipboard?.write) {
+      await navigator.clipboard.write([new ClipboardItem({ "text/plain": Promise.resolve(get()).then((t) => new Blob([t], { type: "text/plain" })) })]);
+    } else {
+      await navigator.clipboard.writeText(await get());
+    }
+    btn.textContent = "コピーしました";
+  } catch {
+    btn.textContent = "コピーできませんでした";
+  }
+  setTimeout(() => { btn.innerHTML = label; }, 2000);
+}
+document.getElementById("copy-script").onclick = (ev) => copyText(loadScript, ev.currentTarget);
+</script>
+</body>
+</html>

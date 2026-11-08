@@ -2,6 +2,8 @@
 
 GitHub の草（日ごとの contribution）と最新の行動3件を、iPhone のホーム画面・ロック画面に出す [Scriptable](https://scriptable.app/) のスクリプトです。Rct の画面サンプルとは別のものです。
 
+見た目の見本と入れ方（コピーのボタンつき）は、ページにもまとめています： https://katsuan.github.io/rct-mock/sqriptable-github/
+
 ## 入れ方
 
 1. App Store で Scriptable を入れる

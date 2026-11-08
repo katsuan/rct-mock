@@ -7,4 +7,4 @@ RemindCodeTyping（Rct）をゲームにした場合の画面サンプルです�
 
 ## ほかに置いているもの
 
-- [sqriptable-github](sqriptable-github/)：GitHub の草を iPhone のウィジェットに出す Scriptable のスクリプト（Rct とは別）
+- [sqriptable-github](https://katsuan.github.io/rct-mock/sqriptable-github/)：GitHub の草を iPhone のウィジェットに出す Scriptable のスクリプト（Rct とは別）
